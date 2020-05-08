@@ -1,0 +1,11 @@
+include: package:effective_dart/analysis_options.yaml
+
+linter:
+  rules:
+    prefer_relative_imports: false
+    avoid_equals_and_hash_code_on_mutable_classes: false
+    sort_constructors_first: true
+
+analyzer:
+  exclude:
+    - test/.test_coverage.dart

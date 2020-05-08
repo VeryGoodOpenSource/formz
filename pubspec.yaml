@@ -1,0 +1,11 @@
+name: formz
+description: A unified form representation in Dart
+version: 0.0.1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dev_dependencies:
+  effective_dart: ^1.2.0
+  test: ^1.14.2
+  test_coverage: ^0.4.1
