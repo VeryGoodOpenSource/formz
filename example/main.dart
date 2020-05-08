@@ -38,7 +38,7 @@ void main() {
     NameInput.dirty(value: 'joe'),
   ];
 
-  print(Formz.validate(validInputs)); // FormzInputStatus.valid
+  print(Formz.validate(validInputs)); // FormzStatus.valid
 
   final invalidInputs = <FormzInput>[
     NameInput.dirty(value: ''),
@@ -46,5 +46,5 @@ void main() {
     NameInput.dirty(value: ''),
   ];
 
-  print(Formz.validate(invalidInputs)); // FormzInputStatus.invalid
+  print(Formz.validate(invalidInputs)); // FormzStatus.invalid
 }
