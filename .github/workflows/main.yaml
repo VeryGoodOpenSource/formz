@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  fresh:
+  formz:
     runs-on: ubuntu-latest
     container:
       image: google/dart:2.8.1
