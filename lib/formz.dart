@@ -90,10 +90,7 @@ abstract class FormzInput<T, E> {
 
   /// Returns a validation error if the [FormzInput] is invalid.
   /// Returns `null` if the [FormzInput] is valid.
-  E get error {
-    final result = validator(value);
-    return result != null ? result : null;
-  }
+  E get error => validator(value);
 
   /// Whether the [FormzInput] value is valid according to the
   /// overridden `validator`.
