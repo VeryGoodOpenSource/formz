@@ -25,3 +25,5 @@ jobs:
         run: pub run test_coverage
       - name: Check Code Coverage
         uses: ChicagoFlutter/lcov-cop@v1.0.0
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v1

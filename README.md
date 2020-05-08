@@ -1,5 +1,6 @@
 # Formz 📝
 
+[![Build](https://github.com/ChicagoFlutter/formz/workflows/build/badge.svg)](https://github.com/ChicagoFlutter/formz/actions)
 [![Pub](https://img.shields.io/pub/v/formz.svg)](https://pub.dev/packages/formz)
 [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
