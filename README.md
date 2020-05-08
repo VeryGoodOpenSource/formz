@@ -32,7 +32,7 @@ class NameInput extends FormzInput<String, NameInputError> {
 }
 ```
 
-## Interact a FormzInput
+## Interact with a FormzInput
 
 ```dart
 final name = NameInput.pure();
