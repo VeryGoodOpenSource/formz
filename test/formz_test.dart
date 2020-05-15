@@ -30,15 +30,21 @@ void main() {
       });
 
       test('status is pure if super.pure is used', () {
-        expect(NameInput.pure(value: 'joe').status, FormzInputStatus.pure);
+        final status = NameInput.pure(value: 'joe').status;
+        expect(status, FormzInputStatus.pure);
+        expect(status.isPure, isTrue);
       });
 
       test('status is valid if super.dirty is used and input is valid', () {
-        expect(NameInput.dirty(value: 'joe').status, FormzInputStatus.valid);
+        final status = NameInput.dirty(value: 'joe').status;
+        expect(status, FormzInputStatus.valid);
+        expect(status.isValid, isTrue);
       });
 
       test('status is invalid if super.dirty is used and input is invalid', () {
-        expect(NameInput.dirty(value: '').status, FormzInputStatus.invalid);
+        final status = NameInput.dirty(value: '').status;
+        expect(status, FormzInputStatus.invalid);
+        expect(status.isInvalid, isTrue);
       });
 
       test('error is NameInputError.empty if pure is used', () {
@@ -121,54 +127,91 @@ void main() {
       });
 
       test('returns valid for empty inputs', () {
-        expect(Formz.validate([]), equals(FormzStatus.valid));
+        final status = Formz.validate([]);
+        expect(status, equals(FormzStatus.valid));
+        expect(status.isValid, isTrue);
       });
 
       test('returns valid for single valid input', () {
-        expect(
-          Formz.validate([NameInput.dirty(value: 'joe')]),
-          equals(FormzStatus.valid),
-        );
+        final status = Formz.validate([NameInput.dirty(value: 'joe')]);
+        expect(status, equals(FormzStatus.valid));
+        expect(status.isValid, isTrue);
       });
 
       test('returns valid for multiple valid inputs', () {
-        expect(
-          Formz.validate([
-            NameInput.dirty(value: 'jen'),
-            NameInput.dirty(value: 'bob'),
-            NameInput.dirty(value: 'alex'),
-          ]),
-          equals(FormzStatus.valid),
-        );
+        final status = Formz.validate([
+          NameInput.dirty(value: 'jen'),
+          NameInput.dirty(value: 'bob'),
+          NameInput.dirty(value: 'alex'),
+        ]);
+        expect(status, equals(FormzStatus.valid));
+        expect(status.isValid, isTrue);
       });
 
       test('returns invalid for single invalid input', () {
-        expect(
-          Formz.validate([NameInput.dirty(value: '')]),
-          equals(FormzStatus.invalid),
-        );
+        final status = Formz.validate([NameInput.dirty(value: '')]);
+        expect(status, equals(FormzStatus.invalid));
+        expect(status.isInvalid, isTrue);
       });
 
       test('returns invalid for multiple invalid inputs', () {
-        expect(
-          Formz.validate([
-            NameInput.dirty(value: ''),
-            NameInput.dirty(value: ''),
-            NameInput.dirty(value: ''),
-          ]),
-          equals(FormzStatus.invalid),
-        );
+        final status = Formz.validate([
+          NameInput.dirty(value: ''),
+          NameInput.dirty(value: ''),
+          NameInput.dirty(value: ''),
+        ]);
+        expect(status, equals(FormzStatus.invalid));
+        expect(status.isInvalid, isTrue);
       });
 
       test('returns invalid when at least one input is invalid', () {
-        expect(
-          Formz.validate([
-            NameInput.dirty(value: 'jan'),
-            NameInput.dirty(value: 'jim'),
-            NameInput.dirty(value: ''),
-          ]),
-          equals(FormzStatus.invalid),
-        );
+        final status = Formz.validate([
+          NameInput.dirty(value: 'jan'),
+          NameInput.dirty(value: 'jim'),
+          NameInput.dirty(value: ''),
+        ]);
+        expect(status, equals(FormzStatus.invalid));
+        expect(status.isInvalid, isTrue);
+      });
+    });
+
+    group('FormzStatusX', () {
+      test('isPure returns true', () {
+        expect(FormzStatus.pure.isPure, isTrue);
+      });
+
+      test('isValid returns true', () {
+        expect(FormzStatus.valid.isValid, isTrue);
+      });
+
+      test('isInvalid returns true', () {
+        expect(FormzStatus.invalid.isInvalid, isTrue);
+      });
+
+      test('isSubmissionInProgress returns true', () {
+        expect(FormzStatus.submissionInProgress.isSubmissionInProgress, isTrue);
+      });
+
+      test('isSubmissionFailure returns true', () {
+        expect(FormzStatus.submissionFailure.isSubmissionFailure, isTrue);
+      });
+
+      test('isSubmissionSuccess returns true', () {
+        expect(FormzStatus.submissionSuccess.isSubmissionSuccess, isTrue);
+      });
+    });
+
+    group('FormzInputStatusX', () {
+      test('isPure returns true', () {
+        expect(FormzInputStatus.pure.isPure, isTrue);
+      });
+
+      test('isValid returns true', () {
+        expect(FormzInputStatus.valid.isValid, isTrue);
+      });
+
+      test('isInvalid returns true', () {
+        expect(FormzInputStatus.invalid.isInvalid, isTrue);
       });
     });
   });

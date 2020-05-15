@@ -21,6 +21,27 @@ enum FormzStatus {
   submissionFailure
 }
 
+/// Useful extensions on [FormzStatus]
+extension FormzStatusX on FormzStatus {
+  /// Indicates whether the form is untouched.
+  bool get isPure => this == FormzStatus.pure;
+
+  /// Indicates whether the form is completely validated.
+  bool get isValid => this == FormzStatus.valid;
+
+  /// Indicates whether the form contains one or more invalid inputs.
+  bool get isInvalid => this == FormzStatus.invalid;
+
+  /// Indicates whether the form is in the process of being submitted.
+  bool get isSubmissionInProgress => this == FormzStatus.submissionInProgress;
+
+  /// Indicates whether the form has been submitted successfully.
+  bool get isSubmissionSuccess => this == FormzStatus.submissionSuccess;
+
+  /// Indicates whether the form submission failed.
+  bool get isSubmissionFailure => this == FormzStatus.submissionFailure;
+}
+
 /// Enum representing the status of a form input at any given point in time.
 enum FormzInputStatus {
   /// The form input has not been touched.
@@ -31,6 +52,18 @@ enum FormzInputStatus {
 
   /// The form input is not valid.
   invalid,
+}
+
+/// Useful extensions on [FormzInputStatus]
+extension FormzInputStatusX on FormzInputStatus {
+  /// Indicates whether the form input is untouched.
+  bool get isPure => this == FormzInputStatus.pure;
+
+  /// Indicates whether the form input is valid.
+  bool get isValid => this == FormzInputStatus.valid;
+
+  /// Indicates whether the form input is invalid.
+  bool get isInvalid => this == FormzInputStatus.invalid;
 }
 
 /// {@template form_input}

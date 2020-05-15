@@ -4,7 +4,7 @@ repository: https://github.com/ChicagoFlutter/formz
 issue_tracker: https://github.com/ChicagoFlutter/formz/issues
 homepage: https://github.com/ChicagoFlutter/formz
 
-version: 0.0.1
+version: 0.1.0
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
