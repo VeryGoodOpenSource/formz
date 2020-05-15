@@ -32,19 +32,16 @@ void main() {
       test('status is pure if super.pure is used', () {
         final status = NameInput.pure(value: 'joe').status;
         expect(status, FormzInputStatus.pure);
-        expect(status.isPure, isTrue);
       });
 
       test('status is valid if super.dirty is used and input is valid', () {
         final status = NameInput.dirty(value: 'joe').status;
         expect(status, FormzInputStatus.valid);
-        expect(status.isValid, isTrue);
       });
 
       test('status is invalid if super.dirty is used and input is invalid', () {
         final status = NameInput.dirty(value: '').status;
         expect(status, FormzInputStatus.invalid);
-        expect(status.isInvalid, isTrue);
       });
 
       test('error is NameInputError.empty if pure is used', () {
@@ -75,6 +72,10 @@ void main() {
 
       test('valid is false if super.dirty is used and input is invalid', () {
         expect(NameInput.dirty(value: '').valid, isFalse);
+      });
+
+      test('invalid is true if super.dirty is used and input is invalid', () {
+        expect(NameInput.dirty(value: '').invalid, isTrue);
       });
 
       test('hashCode is correct', () {
@@ -184,6 +185,15 @@ void main() {
         expect(FormzStatus.valid.isValid, isTrue);
       });
 
+      test('isValidated is correct', () {
+        expect(FormzStatus.pure.isValidated, isFalse);
+        expect(FormzStatus.invalid.isValidated, isFalse);
+        expect(FormzStatus.valid.isValidated, isTrue);
+        expect(FormzStatus.submissionInProgress.isValidated, isTrue);
+        expect(FormzStatus.submissionFailure.isValidated, isTrue);
+        expect(FormzStatus.submissionSuccess.isValidated, isTrue);
+      });
+
       test('isInvalid returns true', () {
         expect(FormzStatus.invalid.isInvalid, isTrue);
       });
@@ -198,20 +208,6 @@ void main() {
 
       test('isSubmissionSuccess returns true', () {
         expect(FormzStatus.submissionSuccess.isSubmissionSuccess, isTrue);
-      });
-    });
-
-    group('FormzInputStatusX', () {
-      test('isPure returns true', () {
-        expect(FormzInputStatus.pure.isPure, isTrue);
-      });
-
-      test('isValid returns true', () {
-        expect(FormzInputStatus.valid.isValid, isTrue);
-      });
-
-      test('isInvalid returns true', () {
-        expect(FormzInputStatus.invalid.isInvalid, isTrue);
       });
     });
   });

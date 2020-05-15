@@ -21,6 +21,13 @@ enum FormzStatus {
   submissionFailure
 }
 
+const _validatedFormzStatuses = <FormzStatus>{
+  FormzStatus.valid,
+  FormzStatus.submissionInProgress,
+  FormzStatus.submissionSuccess,
+  FormzStatus.submissionFailure,
+};
+
 /// Useful extensions on [FormzStatus]
 extension FormzStatusX on FormzStatus {
   /// Indicates whether the form is untouched.
@@ -28,6 +35,14 @@ extension FormzStatusX on FormzStatus {
 
   /// Indicates whether the form is completely validated.
   bool get isValid => this == FormzStatus.valid;
+
+  /// Indicates whether the form has been validated successfully.
+  /// This means the [FormzStatus] is either:
+  /// * `FormzStatus.valid`
+  /// * `FormzStatus.submissionInProgress`
+  /// * `FormzStatus.submissionSuccess`
+  /// * `FormzStatus.submissionFailure`
+  bool get isValidated => _validatedFormzStatuses.contains(this);
 
   /// Indicates whether the form contains one or more invalid inputs.
   bool get isInvalid => this == FormzStatus.invalid;
@@ -52,18 +67,6 @@ enum FormzInputStatus {
 
   /// The form input is not valid.
   invalid,
-}
-
-/// Useful extensions on [FormzInputStatus]
-extension FormzInputStatusX on FormzInputStatus {
-  /// Indicates whether the form input is untouched.
-  bool get isPure => this == FormzInputStatus.pure;
-
-  /// Indicates whether the form input is valid.
-  bool get isValid => this == FormzInputStatus.valid;
-
-  /// Indicates whether the form input is invalid.
-  bool get isInvalid => this == FormzInputStatus.invalid;
 }
 
 /// {@template form_input}
@@ -131,6 +134,11 @@ abstract class FormzInput<T, E> {
   /// Returns `true` if `validator` returns `null` for the
   /// current [FormzInput] value and `false` otherwise.
   bool get valid => validator(value) == null;
+
+  /// Whether the [FormzInput] value is not valid.
+  /// A value is invalid when the overridden `validator`
+  /// returns an error (non-null value).
+  bool get invalid => status == FormzInputStatus.invalid;
 
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
