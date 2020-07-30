@@ -196,5 +196,8 @@ mixin FormzMixin {
   FormzStatus get status => Formz.validate(inputs);
 
   /// Returns all [FormzInput] instances.
+  ///
+  /// Override this and give it all [FormzInput]s in your class that should be
+  /// validated automatically.
   List<FormzInput> get inputs;
 }
