@@ -173,8 +173,11 @@ class Formz {
   }
 }
 
-/// Mixin which handles automatically
-/// validating one or more [FormzInput] instances.
+/// Mixin that automatically handles validation of all [FormzInput]s present in
+/// the [inputs].
+///
+/// When mixing this in, you are required to override the [inputs] getter and
+/// provide all [FormzInput]s you want to automatically validate.
 ///
 /// ```dart
 /// class LoginFormState with FormzMixin {
