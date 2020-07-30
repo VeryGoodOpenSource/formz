@@ -1,3 +1,9 @@
+# 0.3.0
+
+- Add `FormzMixin`
+- Fix `Formz.validate` to take `pure` into consideration
+- Lint improvements
+
 # 0.2.0
 
 - Remove redundant extensions on `FormzInputStatus`

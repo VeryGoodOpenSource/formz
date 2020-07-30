@@ -74,7 +74,7 @@ enum FormzInputStatus {
 /// It contains information about the [FormzInputStatus], [value], as well
 /// as validation status.
 ///
-/// [FormzInput] should be extended to define custom [FormzInputs].
+/// [FormzInput] should be extended to define custom [FormzInput] instances.
 ///
 /// ```dart
 /// enum FirstNameError { empty }
@@ -165,8 +165,42 @@ class Formz {
   /// Returns a [FormzStatus] given a list of [FormzInput].
   static FormzStatus validate(List<FormzInput> inputs) {
     assert(inputs != null);
-    return inputs.any((input) => input.valid == false)
-        ? FormzStatus.invalid
-        : FormzStatus.valid;
+    return inputs.every((element) => element.pure)
+        ? FormzStatus.pure
+        : inputs.any((input) => input.valid == false)
+            ? FormzStatus.invalid
+            : FormzStatus.valid;
   }
+}
+
+/// Mixin that automatically handles validation of all [FormzInput]s present in
+/// the [inputs].
+///
+/// When mixing this in, you are required to override the [inputs] getter and
+/// provide all [FormzInput]s you want to automatically validate.
+///
+/// ```dart
+/// class LoginFormState with FormzMixin {
+///  LoginFormState({
+///    this.username = const Username.pure(),
+///    this.password = const Password.pure(),
+///  });
+///
+///  final Username username;
+///  final Password password;
+///
+///  @override
+///  List<FormzInput> get inputs => [username, password];
+/// }
+/// ```
+mixin FormzMixin {
+  /// [FormzStatus] getter which computes the status based on the
+  /// validity of the [inputs].
+  FormzStatus get status => Formz.validate(inputs);
+
+  /// Returns all [FormzInput] instances.
+  ///
+  /// Override this and give it all [FormzInput]s in your class that should be
+  /// validated automatically.
+  List<FormzInput> get inputs;
 }

@@ -71,3 +71,23 @@ final invalidInputs = <FormzInput>[
 
 print(Formz.validate(invalidInputs)); // FormzStatus.invalid
 ```
+
+## Automatic `FormzStatus` Computation
+
+```dart
+class LoginForm with FormzMixin {
+  LoginForm({
+    this.username = const Username.pure(),
+    this.password = const Password.pure(),
+  });
+
+  final Username username;
+  final Password password;
+
+  @override
+  List<FormzInput> get inputs => [username, password];
+}
+
+final form = LoginForm();
+print(form.status); // FormzStatus.pure
+```
