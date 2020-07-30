@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 import 'package:formz/formz.dart';
 import 'package:test/test.dart';
 
@@ -5,6 +6,26 @@ import 'helpers/helpers.dart';
 
 void main() {
   group('Formz', () {
+    group('FormzMixin', () {
+      test('status returns pure', () {
+        expect(NameInputFormzMixin().status, FormzStatus.pure);
+      });
+
+      test('status returns invalid', () {
+        expect(
+          NameInputFormzMixin(name: const NameInput.dirty(value: '')).status,
+          FormzStatus.invalid,
+        );
+      });
+
+      test('status returns valid', () {
+        expect(
+          NameInputFormzMixin(name: const NameInput.dirty(value: 'joe')).status,
+          FormzStatus.valid,
+        );
+      });
+    });
+
     group('FormzInput', () {
       test('constructor throws AssertionError when value is null', () {
         expect(
@@ -127,10 +148,11 @@ void main() {
         expect(() => Formz.validate(null), throwsA(isA<AssertionError>()));
       });
 
-      test('returns valid for empty inputs', () {
+      test('returns pure for empty inputs', () {
         final status = Formz.validate([]);
-        expect(status, equals(FormzStatus.valid));
-        expect(status.isValid, isTrue);
+        expect(status, equals(FormzStatus.pure));
+        expect(status.isValid, isFalse);
+        expect(status.isPure, isTrue);
       });
 
       test('returns valid for single valid input', () {

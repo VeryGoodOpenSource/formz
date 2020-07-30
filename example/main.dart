@@ -19,20 +19,20 @@ class NameInput extends FormzInput<String, NameInputError> {
 }
 
 void main() {
-  final name = NameInput.pure();
+  const name = NameInput.pure();
   print(name.value); // ''
   print(name.valid); // false
   print(name.status); // FormzInputStatus.pure
   print(name.error); // NameInputError.empty
 
-  final joe = NameInput.dirty(value: 'joe');
+  const joe = NameInput.dirty(value: 'joe');
   print(joe.value); // 'joe'
   print(joe.valid); // true
   print(joe.status); // FormzInputStatus.valid
   print(joe.error); // null
   print(joe.toString()); // NameInput('joe', true);
 
-  final validInputs = <FormzInput>[
+  const validInputs = <FormzInput>[
     NameInput.dirty(value: 'jan'),
     NameInput.dirty(value: 'jen'),
     NameInput.dirty(value: 'joe'),
@@ -40,7 +40,7 @@ void main() {
 
   print(Formz.validate(validInputs)); // FormzStatus.valid
 
-  final invalidInputs = <FormzInput>[
+  const invalidInputs = <FormzInput>[
     NameInput.dirty(value: ''),
     NameInput.dirty(value: ''),
     NameInput.dirty(value: ''),

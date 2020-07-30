@@ -11,3 +11,12 @@ class NameInput extends FormzInput<String, NameInputError> {
     return value?.isNotEmpty == true ? null : NameInputError.empty;
   }
 }
+
+class NameInputFormzMixin with FormzMixin {
+  NameInputFormzMixin({this.name = const NameInput.pure()});
+
+  final NameInput name;
+
+  @override
+  List<FormzInput> get inputs => [name];
+}
