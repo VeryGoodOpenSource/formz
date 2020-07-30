@@ -72,7 +72,7 @@ final invalidInputs = <FormzInput>[
 print(Formz.validate(invalidInputs)); // FormzStatus.invalid
 ```
 
-## Automatically FormzStatus Computation
+## Automatic `FormzStatus` Computation
 
 ```dart
 class LoginForm with FormzMixin {
