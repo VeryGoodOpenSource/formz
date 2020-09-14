@@ -90,7 +90,7 @@ enum FormzInputStatus {
 /// ```
 /// {@endtemplate}
 abstract class FormzInput<T, E> {
-  const FormzInput._(this.value, [this.pure = true]) : assert(value != null);
+  const FormzInput._(this.value, [this.pure = true]);
 
   /// Constructor which create a `pure` [FormzInput] with a given value.
   const FormzInput.pure(T value) : this._(value);

@@ -27,17 +27,6 @@ void main() {
     });
 
     group('FormzInput', () {
-      test('constructor throws AssertionError when value is null', () {
-        expect(
-          () => NameInput.pure(value: null),
-          throwsA(isA<AssertionError>()),
-        );
-        expect(
-          () => NameInput.dirty(value: null),
-          throwsA(isA<AssertionError>()),
-        );
-      });
-
       test('value is correct', () {
         expect(NameInput.pure(value: 'joe').value, 'joe');
       });

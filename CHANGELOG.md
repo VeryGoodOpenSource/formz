@@ -1,3 +1,7 @@
+# 0.3.1
+
+- Allow value to be `null` in `FormzInput`
+
 # 0.3.0
 
 - Add `FormzMixin`
