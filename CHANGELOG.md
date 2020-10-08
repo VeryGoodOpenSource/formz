@@ -1,3 +1,8 @@
+# 0.3.2
+
+- chore: fix code formatting
+- ci: update to Dart 2.10.0
+
 # 0.3.1
 
 - Allow value to be `null` in `FormzInput`

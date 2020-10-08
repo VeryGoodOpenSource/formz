@@ -122,7 +122,9 @@ abstract class FormzInput<T, E> {
   ///   - if the input has been modified and validation succeeded.
   FormzInputStatus get status => pure
       ? FormzInputStatus.pure
-      : valid ? FormzInputStatus.valid : FormzInputStatus.invalid;
+      : valid
+          ? FormzInputStatus.valid
+          : FormzInputStatus.invalid;
 
   /// Returns a validation error if the [FormzInput] is invalid.
   /// Returns `null` if the [FormzInput] is valid.
