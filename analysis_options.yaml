@@ -5,6 +5,9 @@ analyzer:
   exclude:
     - test/.test_coverage.dart
 
+  enable-experiment:
+    - non-nullable
+
 linter:
   rules:
     - public_member_api_docs

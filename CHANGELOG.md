@@ -1,3 +1,7 @@
+# 0.4.0
+
+- chore: add null safety support
+
 # 0.3.2
 
 - chore: fix code formatting
