@@ -1,6 +1,7 @@
-# 0.4.0
+# 0.4.0.nullsafety.0
 
-- chore: add null safety support
+- **BREAKING**: opt into null safety
+- feat!: upgrade Dart SDK constraints to `>=2.12.0-0 <3.0.0`
 
 # 0.3.2
 
