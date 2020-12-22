@@ -133,10 +133,6 @@ void main() {
     });
 
     group('validate', () {
-      test('throws AssertionError for null inputs', () {
-        expect(() => Formz.validate(null), throwsA(isA<AssertionError>()));
-      });
-
       test('returns pure for empty inputs', () {
         final status = Formz.validate([]);
         expect(status, equals(FormzStatus.pure));

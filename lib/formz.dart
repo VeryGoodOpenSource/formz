@@ -128,7 +128,7 @@ abstract class FormzInput<T, E> {
 
   /// Returns a validation error if the [FormzInput] is invalid.
   /// Returns `null` if the [FormzInput] is valid.
-  E get error => validator(value);
+  E? get error => validator(value);
 
   /// Whether the [FormzInput] value is valid according to the
   /// overridden `validator`.
@@ -144,7 +144,7 @@ abstract class FormzInput<T, E> {
 
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
-  E validator(T value);
+  E? validator(T? value);
 
   @override
   int get hashCode => value.hashCode ^ pure.hashCode;
@@ -166,7 +166,6 @@ abstract class FormzInput<T, E> {
 class Formz {
   /// Returns a [FormzStatus] given a list of [FormzInput].
   static FormzStatus validate(List<FormzInput> inputs) {
-    assert(inputs != null);
     return inputs.every((element) => element.pure)
         ? FormzStatus.pure
         : inputs.any((input) => input.valid == false)

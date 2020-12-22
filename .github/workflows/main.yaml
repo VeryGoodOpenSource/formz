@@ -12,7 +12,7 @@ jobs:
   formz:
     runs-on: ubuntu-latest
     container:
-      image: google/dart:2.10.0
+      image: google/dart:2.12-dev
     steps:
       - uses: actions/checkout@v2
       - name: Install Dependencies
@@ -22,8 +22,8 @@ jobs:
       - name: Analyze
         run: dartanalyzer --fatal-infos --fatal-warnings lib test
       - name: Test
-        run: pub run test_coverage
+        run: dart test --coverage=coverage && pub run coverage:format_coverage --lcov --in=coverage --out=coverage/lcov.info --packages=.packages --report-on=lib
       - name: Check Code Coverage
-        uses: ChicagoFlutter/lcov-cop@v1.0.0
+        uses: VeryGoodOpenSource/very_good_coverage@v1.1.1
       - name: Upload Coverage to Codecov
         uses: codecov/codecov-action@v1
