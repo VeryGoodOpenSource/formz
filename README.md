@@ -1,7 +1,7 @@
 # Formz 📝
 
 [![Build](https://github.com/ChicagoFlutter/formz/workflows/build/badge.svg)](https://github.com/ChicagoFlutter/formz/actions)
-[![codecov](https://codecov.io/gh/ChicagoFlutter/formz/branch/master/graph/badge.svg)](https://codecov.io/gh/ChicagoFlutter/formz)
+[![codecov](https://codecov.io/gh/ChicagoFlutter/formz/branch/main/graph/badge.svg)](https://codecov.io/gh/ChicagoFlutter/formz)
 [![Pub](https://img.shields.io/pub/v/formz.svg)](https://pub.dev/packages/formz)
 [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
 [![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
