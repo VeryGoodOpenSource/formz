@@ -93,10 +93,10 @@ abstract class FormzInput<T, E> {
   const FormzInput._(this.value, [this.pure = true]);
 
   /// Constructor which create a `pure` [FormzInput] with a given value.
-  const FormzInput.pure(T value) : this._(value);
+  FormzInput.pure(T value) : this._(value);
 
   /// Constructor which create a `dirty` [FormzInput] with a given value.
-  const FormzInput.dirty(T value) : this._(value, false);
+  FormzInput.dirty(T value) : this._(value, false);
 
   /// The value of the given [FormzInput].
   /// For example, if you have a `FormzInput` for `FirstName`,
