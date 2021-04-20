@@ -13,14 +13,14 @@ void main() {
 
       test('status returns invalid', () {
         expect(
-          NameInputFormzMixin(name: const NameInput.dirty(value: '')).status,
+          NameInputFormzMixin(name: NameInput.dirty(value: '')).status,
           FormzStatus.invalid,
         );
       });
 
       test('status returns valid', () {
         expect(
-          NameInputFormzMixin(name: const NameInput.dirty(value: 'joe')).status,
+          NameInputFormzMixin(name: NameInput.dirty(value: 'joe')).status,
           FormzStatus.valid,
         );
       });
