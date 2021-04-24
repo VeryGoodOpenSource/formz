@@ -7,8 +7,8 @@ class NameInput extends FormzInput<String, NameInputError> {
   const NameInput.dirty({String value = ''}) : super.dirty(value);
 
   @override
-  NameInputError? validator(String? value) {
-    return value?.isNotEmpty == true ? null : NameInputError.empty;
+  NameInputError? validator(String value) {
+    return value.isEmpty ? NameInputError.empty : null;
   }
 }
 
