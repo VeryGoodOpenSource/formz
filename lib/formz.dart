@@ -83,8 +83,8 @@ enum FormzInputStatus {
 ///   const FirstName.dirty({String value = ''}) : super.dirty(value);
 ///
 ///   @override
-///   FirstNameError validator(String value) {
-///     return value?.isNotEmpty == true ? null : FirstNameError.empty;
+///   FirstNameError? validator(String value) {
+///     return value.isEmpty ? FirstNameError.empty : null;
 ///   }
 /// }
 /// ```
