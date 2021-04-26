@@ -83,8 +83,8 @@ enum FormzInputStatus {
 ///   const FirstName.dirty({String value = ''}) : super.dirty(value);
 ///
 ///   @override
-///   FirstNameError validator(String value) {
-///     return value?.isNotEmpty == true ? null : FirstNameError.empty;
+///   FirstNameError? validator(String value) {
+///     return value.isEmpty ? FirstNameError.empty : null;
 ///   }
 /// }
 /// ```
@@ -144,7 +144,7 @@ abstract class FormzInput<T, E> {
 
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
-  E? validator(T? value);
+  E? validator(T value);
 
   @override
   int get hashCode => value.hashCode ^ pure.hashCode;
