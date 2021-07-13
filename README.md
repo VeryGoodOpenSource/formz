@@ -91,3 +91,30 @@ class LoginForm with FormzMixin {
 final form = LoginForm();
 print(form.status); // FormzStatus.pure
 ```
+## Formz with Flutter
+```dart
+Email email = const Email.pure();  
+Password password = const Password.pure();  
+FormzStatus? status;
+ 
+TextFormField(
+onChanged: (value) => setState(() {
+             email = Email.dirty(value);
+           }),
+...
+),
+TextFormField(
+onChanged: (value) => setState(() {
+             password = Password.dirty(value);
+           }),
+...
+),
+
+ElevatedButton(
+           onPressed: () => {
+             status = Formz.validate([email, password]),
+             print(status),
+           },
+           child: const Text('Submit'),
+         ),
+```
