@@ -25,9 +25,9 @@ class MyForm extends StatefulWidget {
 }
 
 class _MyFormState extends State<MyForm> {
-  Password password = const Password.dirty();
-  Email email = const Email.pure();
-  FormzStatus? status;
+  var password = const Password.dirty();
+  var email = const Email.pure();
+  var status = FormzStatus.pure;
 
   void setEmail(String value) {
     setState(() {
