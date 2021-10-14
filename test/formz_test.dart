@@ -199,6 +199,7 @@ void main() {
         expect(FormzStatus.submissionInProgress.isValidated, isTrue);
         expect(FormzStatus.submissionFailure.isValidated, isTrue);
         expect(FormzStatus.submissionSuccess.isValidated, isTrue);
+        expect(FormzStatus.submissionCanceled.isValidated, isTrue);
       });
 
       test('isInvalid returns true', () {
@@ -215,6 +216,10 @@ void main() {
 
       test('isSubmissionSuccess returns true', () {
         expect(FormzStatus.submissionSuccess.isSubmissionSuccess, isTrue);
+      });
+
+      test('isSubmissionCanceled returns true', () {
+        expect(FormzStatus.submissionCanceled.isSubmissionCanceled, isTrue);
       });
     });
   });
