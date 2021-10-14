@@ -1,3 +1,7 @@
+# 0.4.1
+
+- feat: add `submissionCanceled` to `FormzStatus`
+
 # 0.4.0
 
 - **BREAKING**: opt into null safety
