@@ -18,7 +18,10 @@ enum FormzStatus {
   submissionSuccess,
 
   /// The form submission failed.
-  submissionFailure
+  submissionFailure,
+
+  /// The form submission has been canceled.
+  submissionCanceled
 }
 
 const _validatedFormzStatuses = <FormzStatus>{
@@ -26,6 +29,7 @@ const _validatedFormzStatuses = <FormzStatus>{
   FormzStatus.submissionInProgress,
   FormzStatus.submissionSuccess,
   FormzStatus.submissionFailure,
+  FormzStatus.submissionCanceled,
 };
 
 /// Useful extensions on [FormzStatus]
@@ -55,6 +59,9 @@ extension FormzStatusX on FormzStatus {
 
   /// Indicates whether the form submission failed.
   bool get isSubmissionFailure => this == FormzStatus.submissionFailure;
+
+  /// Indicates whether the form submission has been canceled.
+  bool get isSubmissionCanceled => this == FormzStatus.submissionCanceled;
 }
 
 /// Enum representing the status of a form input at any given point in time.
