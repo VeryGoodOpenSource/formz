@@ -63,9 +63,9 @@ const validInputs = <FormzInput>[
 print(Formz.validate(validInputs)); // true
 
 const invalidInputs = <FormzInput>[
-  NameInput.dirty(value: ''),
-  NameInput.dirty(value: ''),
-  NameInput.dirty(value: ''),
+  NameInput.dirty(),
+  NameInput.dirty(),
+  NameInput.dirty(),
 ];
 
 print(Formz.validate(invalidInputs)); // false

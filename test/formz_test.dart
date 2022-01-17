@@ -14,9 +14,7 @@ void main() {
       });
 
       test('is not valid when containing a dirty/invalid value', () {
-        final form = NameInputFormzMixin(
-          name: const NameInput.dirty(value: ''),
-        );
+        final form = NameInputFormzMixin(name: const NameInput.dirty());
         expect(form.isValid, isFalse);
         expect(form.isNotValid, isTrue);
       });
@@ -54,16 +52,16 @@ void main() {
       });
 
       test('isValid is false if super.dirty is used and input is invalid', () {
-        final isValid = NameInput.dirty(value: '').isValid;
+        final isValid = NameInput.dirty().isValid;
         expect(isValid, isFalse);
       });
 
       test('error is NameInputError.empty if pure is used', () {
-        expect(NameInput.pure(value: '').error, NameInputError.empty);
+        expect(NameInput.pure().error, NameInputError.empty);
       });
 
       test('displayError is null if pure is used', () {
-        expect(NameInput.pure(value: '').displayError, isNull);
+        expect(NameInput.pure().displayError, isNull);
       });
 
       test('error is null if super.dirty is used and input is valid', () {
@@ -79,13 +77,13 @@ void main() {
       test(
           'error is NameInputError.empty '
           'if super.dirty is used and input is invalid', () {
-        expect(NameInput.dirty(value: '').error, NameInputError.empty);
+        expect(NameInput.dirty().error, NameInputError.empty);
       });
 
       test(
           'displayError is NameInputError.empty '
           'if super.dirty is used and input is invalid', () {
-        expect(NameInput.dirty(value: '').displayError, NameInputError.empty);
+        expect(NameInput.dirty().displayError, NameInputError.empty);
       });
 
       test('isValid is true if super.pure is used and input is valid', () {
@@ -99,24 +97,24 @@ void main() {
       });
 
       test('isValid is false if super.pure is used and input is invalid', () {
-        expect(NameInput.pure(value: '').isValid, isFalse);
-        expect(NameInput.pure(value: '').isNotValid, isTrue);
+        expect(NameInput.pure().isValid, isFalse);
+        expect(NameInput.pure().isNotValid, isTrue);
       });
 
       test('isValid is false if super.dirty is used and input is invalid', () {
-        expect(NameInput.dirty(value: '').isValid, isFalse);
-        expect(NameInput.dirty(value: '').isNotValid, isTrue);
+        expect(NameInput.dirty().isValid, isFalse);
+        expect(NameInput.dirty().isNotValid, isTrue);
       });
 
       test(
           'isNotValid is true if super.dirty is used '
           'and input is invalid', () {
-        expect(NameInput.dirty(value: '').isValid, isFalse);
-        expect(NameInput.dirty(value: '').isNotValid, isTrue);
+        expect(NameInput.dirty().isValid, isFalse);
+        expect(NameInput.dirty().isNotValid, isTrue);
       });
 
       test('hashCode is correct', () {
-        final name = NameInput.pure(value: '');
+        final name = NameInput.pure();
         final joe = NameInput.dirty(value: 'joe');
         expect(name.hashCode, Object.hashAll([name.value, name.isPure]));
         expect(joe.hashCode, Object.hashAll([joe.value, joe.isPure]));
@@ -189,19 +187,19 @@ void main() {
       });
 
       test('returns invalid for a pure/invalid input', () {
-        expect(Formz.validate([NameInput.pure(value: '')]), isFalse);
+        expect(Formz.validate([NameInput.pure()]), isFalse);
       });
 
       test('returns invalid for a dirty/invalid input', () {
-        expect(Formz.validate([NameInput.dirty(value: '')]), isFalse);
+        expect(Formz.validate([NameInput.dirty()]), isFalse);
       });
 
       test('returns invalid for multiple invalid inputs', () {
         expect(
           Formz.validate([
-            NameInput.dirty(value: ''),
-            NameInput.dirty(value: ''),
-            NameInput.dirty(value: ''),
+            NameInput.dirty(),
+            NameInput.dirty(),
+            NameInput.dirty(),
           ]),
           isFalse,
         );
@@ -212,7 +210,7 @@ void main() {
           Formz.validate([
             NameInput.dirty(value: 'jan'),
             NameInput.dirty(value: 'jim'),
-            NameInput.dirty(value: ''),
+            NameInput.dirty(),
           ]),
           isFalse,
         );

@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:formz/formz.dart';
 
 // Define input validation errors
@@ -40,9 +42,9 @@ void main() {
   print(Formz.validate(validInputs)); // true
 
   const invalidInputs = <FormzInput>[
-    NameInput.dirty(value: ''),
-    NameInput.dirty(value: ''),
-    NameInput.dirty(value: ''),
+    NameInput.dirty(),
+    NameInput.dirty(),
+    NameInput.dirty(),
   ];
 
   print(Formz.validate(invalidInputs)); // false

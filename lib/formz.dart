@@ -1,5 +1,7 @@
 library formz;
 
+import 'package:meta/meta.dart';
+
 /// Enum representing the submission status of a form.
 enum FormzSubmissionStatus {
   /// The form is in the process of being submitted.
@@ -49,6 +51,7 @@ extension FormzSubmissionStatusX on FormzSubmissionStatus {
 /// }
 /// ```
 /// {@endtemplate}
+@immutable
 abstract class FormzInput<T, E> {
   const FormzInput._({required this.value, this.isPure = true});
 
