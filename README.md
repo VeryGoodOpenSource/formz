@@ -71,7 +71,7 @@ const invalidInputs = <FormzInput>[
 print(Formz.validate(invalidInputs)); // false
 ```
 
-## Automatic `FormzValidationStatus` Computation
+## Automatic Validation
 
 ```dart
 class LoginForm with FormzMixin {
@@ -87,6 +87,7 @@ class LoginForm with FormzMixin {
   List<FormzInput> get inputs => [username, password];
 }
 
-final form = LoginForm();
-print(form.isValid); // false
+void main() {
+  print(LoginForm().isValid); // false
+}
 ```
