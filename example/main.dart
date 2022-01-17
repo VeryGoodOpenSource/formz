@@ -21,16 +21,15 @@ class NameInput extends FormzInput<String, NameInputError> {
 void main() {
   const name = NameInput.pure();
   print(name.value); // ''
-  print(name.valid); // false
-  print(name.status); // FormzInputStatus.pure
+  print(name.isValid); // false
   print(name.error); // NameInputError.empty
+  print(name.displayError); // null
 
   const joe = NameInput.dirty(value: 'joe');
   print(joe.value); // 'joe'
-  print(joe.valid); // true
-  print(joe.status); // FormzInputStatus.valid
+  print(joe.isValid); // true
   print(joe.error); // null
-  print(joe.toString()); // NameInput('joe', true);
+  print(name.displayError); // null
 
   const validInputs = <FormzInput>[
     NameInput.dirty(value: 'jan'),
@@ -38,7 +37,7 @@ void main() {
     NameInput.dirty(value: 'joe'),
   ];
 
-  print(Formz.validate(validInputs)); // FormzStatus.valid
+  print(Formz.validate(validInputs)); // true
 
   const invalidInputs = <FormzInput>[
     NameInput.dirty(value: ''),
@@ -46,5 +45,5 @@ void main() {
     NameInput.dirty(value: ''),
   ];
 
-  print(Formz.validate(invalidInputs)); // FormzStatus.invalid
+  print(Formz.validate(invalidInputs)); // false
 }

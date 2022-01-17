@@ -8,7 +8,7 @@ documentation: https://github.com/ChicagoFlutter/formz
 version: 0.4.1
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.14.0 <3.0.0"
 
 dev_dependencies:
   coverage: ^0.14.2
