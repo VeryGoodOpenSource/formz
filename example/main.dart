@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:formz/formz.dart';
 
 // Define input validation errors
@@ -21,16 +23,15 @@ class NameInput extends FormzInput<String, NameInputError> {
 void main() {
   const name = NameInput.pure();
   print(name.value); // ''
-  print(name.valid); // false
-  print(name.status); // FormzInputStatus.pure
+  print(name.isValid); // false
   print(name.error); // NameInputError.empty
+  print(name.displayError); // null
 
   const joe = NameInput.dirty(value: 'joe');
   print(joe.value); // 'joe'
-  print(joe.valid); // true
-  print(joe.status); // FormzInputStatus.valid
+  print(joe.isValid); // true
   print(joe.error); // null
-  print(joe.toString()); // NameInput('joe', true);
+  print(name.displayError); // null
 
   const validInputs = <FormzInput>[
     NameInput.dirty(value: 'jan'),
@@ -38,13 +39,13 @@ void main() {
     NameInput.dirty(value: 'joe'),
   ];
 
-  print(Formz.validate(validInputs)); // FormzStatus.valid
+  print(Formz.validate(validInputs)); // true
 
   const invalidInputs = <FormzInput>[
-    NameInput.dirty(value: ''),
-    NameInput.dirty(value: ''),
-    NameInput.dirty(value: ''),
+    NameInput.dirty(),
+    NameInput.dirty(),
+    NameInput.dirty(),
   ];
 
-  print(Formz.validate(invalidInputs)); // FormzStatus.invalid
+  print(Formz.validate(invalidInputs)); // false
 }

@@ -38,41 +38,40 @@ class NameInput extends FormzInput<String, NameInputError> {
 ## Interact with a FormzInput
 
 ```dart
-final name = NameInput.pure();
+const name = NameInput.pure();
 print(name.value); // ''
-print(name.valid); // false
-print(name.status); // FormzInputStatus.pure
+print(name.isValid); // false
 print(name.error); // NameInputError.empty
+print(name.displayError); // null
 
-final joe = NameInput.dirty(value: 'joe');
+const joe = NameInput.dirty(value: 'joe');
 print(joe.value); // 'joe'
-print(joe.valid); // true
-print(joe.status); // FormzInputStatus.valid
+print(joe.isValid); // true
 print(joe.error); // null
-print(joe.toString()); // NameInput('joe', true);
+print(name.displayError); // null
 ```
 
 ## Validate Multiple FormzInput Items
 
 ```dart
-final validInputs = <FormzInput>[
+const validInputs = <FormzInput>[
   NameInput.dirty(value: 'jan'),
   NameInput.dirty(value: 'jen'),
   NameInput.dirty(value: 'joe'),
 ];
 
-print(Formz.validate(validInputs)); // FormzStatus.valid
+print(Formz.validate(validInputs)); // true
 
-final invalidInputs = <FormzInput>[
-  NameInput.dirty(value: ''),
-  NameInput.dirty(value: ''),
-  NameInput.dirty(value: ''),
+const invalidInputs = <FormzInput>[
+  NameInput.dirty(),
+  NameInput.dirty(),
+  NameInput.dirty(),
 ];
 
-print(Formz.validate(invalidInputs)); // FormzStatus.invalid
+print(Formz.validate(invalidInputs)); // false
 ```
 
-## Automatic `FormzStatus` Computation
+## Automatic Validation
 
 ```dart
 class LoginForm with FormzMixin {
@@ -88,6 +87,7 @@ class LoginForm with FormzMixin {
   List<FormzInput> get inputs => [username, password];
 }
 
-final form = LoginForm();
-print(form.status); // FormzStatus.pure
+void main() {
+  print(LoginForm().isValid); // false
+}
 ```
