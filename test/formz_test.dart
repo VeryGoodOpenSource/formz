@@ -60,30 +60,14 @@ void main() {
         expect(NameInput.pure().error, NameInputError.empty);
       });
 
-      test('displayError is null if pure is used', () {
-        expect(NameInput.pure().displayError, isNull);
-      });
-
       test('error is null if super.dirty is used and input is valid', () {
         expect(NameInput.dirty(value: 'joe').error, isNull);
-      });
-
-      test(
-          'displayError is null if super.dirty is used '
-          'and input is valid', () {
-        expect(NameInput.dirty(value: 'joe').displayError, isNull);
       });
 
       test(
           'error is NameInputError.empty '
           'if super.dirty is used and input is invalid', () {
         expect(NameInput.dirty().error, NameInputError.empty);
-      });
-
-      test(
-          'displayError is NameInputError.empty '
-          'if super.dirty is used and input is invalid', () {
-        expect(NameInput.dirty().displayError, NameInputError.empty);
       });
 
       test('isValid is true if super.pure is used and input is valid', () {
@@ -218,19 +202,23 @@ void main() {
     });
 
     group('FormzSubmissionStatusX', () {
-      test('isSubmissionInProgress returns true', () {
+      test('isInitial returns true', () {
+        expect(FormzSubmissionStatus.initial.isInitial, isTrue);
+      });
+
+      test('isInProgress returns true', () {
         expect(FormzSubmissionStatus.inProgress.isInProgress, isTrue);
       });
 
-      test('isSubmissionFailure returns true', () {
+      test('isFailure returns true', () {
         expect(FormzSubmissionStatus.failure.isFailure, isTrue);
       });
 
-      test('isSubmissionSuccess returns true', () {
+      test('isSuccess returns true', () {
         expect(FormzSubmissionStatus.success.isSuccess, isTrue);
       });
 
-      test('isSubmissionCanceled returns true', () {
+      test('isCanceled returns true', () {
         expect(FormzSubmissionStatus.canceled.isCanceled, isTrue);
       });
     });

@@ -17,7 +17,10 @@ jobs:
       - uses: dart-lang/setup-dart@v1
 
       - name: Install Dependencies
-        run: dart pub get
+        run: |
+          flutter pub global activate very_good_cli
+          very_good --analytics false
+          very_good packages get --recursive
 
       - name: Format
         run: dart format --set-exit-if-changed .
