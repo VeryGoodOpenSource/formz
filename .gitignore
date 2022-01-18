@@ -12,5 +12,4 @@ doc/api/
 
 # Test Coverage
 coverage/
-coverage_badge.svg
 test/.test_coverage.dart

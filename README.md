@@ -1,10 +1,15 @@
-# Formz 📝
+# 📝 Formz
 
-[![Build](https://github.com/ChicagoFlutter/formz/workflows/build/badge.svg)](https://github.com/ChicagoFlutter/formz/actions)
-[![codecov](https://codecov.io/gh/ChicagoFlutter/formz/branch/main/graph/badge.svg)](https://codecov.io/gh/ChicagoFlutter/formz)
-[![Pub](https://img.shields.io/pub/v/formz.svg)](https://pub.dev/packages/formz)
-[![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart)
-[![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)](https://opensource.org/licenses/MIT)
+[![Very Good Ventures][logo_white]][very_good_ventures_link_dark]
+[![Very Good Ventures][logo_black]][very_good_ventures_link_light]
+
+Developed with 💙 by [Very Good Ventures][very_good_ventures_link] 🦄
+
+[![ci][ci_badge]][ci_link]
+[![coverage][coverage_badge]][ci_link]
+[![pub package][pub_badge]][pub_link]
+[![License: MIT][license_badge]][license_link]
+[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_badge_link]
 
 ---
 
@@ -91,3 +96,18 @@ void main() {
   print(LoginForm().isValid); // false
 }
 ```
+
+[ci_badge]: https://github.com/VeryGoodOpenSource/formz/workflows/formz/badge.svg
+[ci_link]: https://github.com/VeryGoodOpenSource/formz/actions
+[coverage_badge]: https://raw.githubusercontent.com/VeryGoodOpenSource/formz/main/coverage_badge.svg
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license_link]: https://opensource.org/licenses/MIT
+[logo_black]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_black.png#gh-light-mode-only
+[logo_white]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_white.png#gh-dark-mode-only
+[pub_badge]: https://img.shields.io/pub/v/formz.svg
+[pub_link]: https://pub.dartlang.org/packages/formz
+[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
+[very_good_analysis_badge_link]: https://pub.dev/packages/very_good_analysis
+[very_good_ventures_link]: https://verygood.ventures
+[very_good_ventures_link_dark]: https://verygood.ventures#gh-dark-mode-only
+[very_good_ventures_link_light]: https://verygood.ventures#gh-light-mode-only
