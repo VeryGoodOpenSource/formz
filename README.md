@@ -97,7 +97,7 @@ void main() {
 }
 ```
 
-[ci_badge]: https://github.com/VeryGoodOpenSource/formz/workflows/formz/badge.svg
+[ci_badge]: https://github.com/VeryGoodOpenSource/formz/actions/workflows/main.yaml/badge.svg
 [ci_link]: https://github.com/VeryGoodOpenSource/formz/actions
 [coverage_badge]: https://raw.githubusercontent.com/VeryGoodOpenSource/formz/main/coverage_badge.svg
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
