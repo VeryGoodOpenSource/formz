@@ -35,7 +35,7 @@ class NameInput extends FormzInput<String, NameInputError> {
   // Override validator to handle validating a given input value.
   @override
   NameInputError? validator(String value) {
-    return value?.isNotEmpty == true ? null : NameInputError.empty;
+    return value.isEmpty ? NameInputError.empty : null;
   }
 }
 ```

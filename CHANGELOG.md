@@ -34,7 +34,7 @@
 
   @override
   NameInputError? validator(String value) {
-      return value.isNotEmpty == true ? null : NameInputError.empty;
+      return value.isEmpty ? NameInputError.empty : null;
   }
   }
 
