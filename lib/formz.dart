@@ -4,6 +4,9 @@ import 'package:meta/meta.dart';
 
 /// Enum representing the submission status of a form.
 enum FormzSubmissionStatus {
+  /// The form has not yet been submitted.
+  initial,
+
   /// The form is in the process of being submitted.
   inProgress,
 
@@ -19,6 +22,9 @@ enum FormzSubmissionStatus {
 
 /// Useful extensions on [FormzSubmissionStatus]
 extension FormzSubmissionStatusX on FormzSubmissionStatus {
+  /// Indicates whether the form has not yet been submitted.
+  bool get isInitial => this == FormzSubmissionStatus.initial;
+
   /// Indicates whether the form is in the process of being submitted.
   bool get isInProgress => this == FormzSubmissionStatus.inProgress;
 
@@ -92,13 +98,13 @@ abstract class FormzInput<T, E> {
   /// Returns `null` if the [FormzInput] is valid.
   E? get error => validator(value);
 
-  /// A function that must return a validation error if the provided
-  /// [value] is invalid and `null` otherwise.
-  E? validator(T value);
-
   /// The error to display if the [FormzInput] value
   /// is not valid and has been modified.
   E? get displayError => isPure ? null : error;
+
+  /// A function that must return a validation error if the provided
+  /// [value] is invalid and `null` otherwise.
+  E? validator(T value);
 
   @override
   int get hashCode => Object.hashAll([value, isPure]);
