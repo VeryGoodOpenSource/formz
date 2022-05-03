@@ -1,11 +1,11 @@
 name: formz
 description: A unified form representation in Dart which aims to simplify form representation and validation in a generic way.
-repository: https://github.com/ChicagoFlutter/formz
-issue_tracker: https://github.com/ChicagoFlutter/formz/issues
-homepage: https://github.com/ChicagoFlutter/formz
-documentation: https://github.com/ChicagoFlutter/formz
+repository: https://github.com/VeryGoodOpenSource/formz
+issue_tracker: https://github.com/VeryGoodOpenSource/formz/issues
+homepage: https://github.com/VeryGoodOpenSource/formz
+documentation: https://github.com/VeryGoodOpenSource/formz
 
-version: 0.4.1
+version: 0.5.0-dev.1
 
 environment:
   sdk: ">=2.14.0 <3.0.0"
