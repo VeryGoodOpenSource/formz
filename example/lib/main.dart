@@ -96,9 +96,7 @@ class _MyFormState extends State<MyForm> {
     _key.currentState!.reset();
     _emailController.clear();
     _passwordController.clear();
-    setState(() {
-      _state = MyFormState();
-    });
+    setState(() => _state = MyFormState());
   }
 
   @override
@@ -131,7 +129,7 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Email',
               helperText: 'A valid email e.g. joe.doe@gmail.com',
             ),
-            validator: (_) => _state.email.displayError,
+            validator: (_) => _state.email.displayError?.text(),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
           ),
@@ -145,7 +143,7 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Password',
               errorMaxLines: 2,
             ),
-            validator: (_) => _state.password.displayError,
+            validator: (_) => _state.password.displayError?.text(),
             obscureText: true,
             textInputAction: TextInputAction.done,
           ),
@@ -225,16 +223,20 @@ class Password extends FormzInput<String, PasswordValidationError> {
   }
 }
 
-extension on Email {
-  String? get displayError {
-    return error != null ? 'Please ensure the email entered is valid' : null;
+extension on EmailValidationError {
+  String text() {
+    switch (this) {
+      case EmailValidationError.invalid:
+        return 'Please ensure the email entered is valid';
+    }
   }
 }
 
-extension on Password {
-  String? get displayError {
-    return error != null
-        ? '''Password must be at least 8 characters and contain at least one letter and number'''
-        : null;
+extension on PasswordValidationError {
+  String text() {
+    switch (this) {
+      case PasswordValidationError.invalid:
+        return '''Password must be at least 8 characters and contain at least one letter and number''';
+    }
   }
 }

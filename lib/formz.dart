@@ -98,6 +98,10 @@ abstract class FormzInput<T, E> {
   /// Returns `null` if the [FormzInput] is valid.
   E? get error => validator(value);
 
+  /// The error to display if the [FormzInput] value
+  /// is not valid and has been modified.
+  E? get displayError => isPure ? null : error;
+
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
   E? validator(T value);

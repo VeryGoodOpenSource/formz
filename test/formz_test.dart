@@ -70,6 +70,18 @@ void main() {
         expect(NameInput.dirty().error, NameInputError.empty);
       });
 
+      test('displayError is null if input is pure', () {
+        expect(NameInput.pure().displayError, isNull);
+      });
+
+      test('displayError is null if error is null', () {
+        expect(NameInput.dirty(value: 'joe').displayError, isNull);
+      });
+
+      test('displayError is defined if error is not null', () {
+        expect(NameInput.dirty().displayError, NameInputError.empty);
+      });
+
       test('isValid is true if super.pure is used and input is valid', () {
         expect(NameInput.pure(value: 'joe').isValid, isTrue);
         expect(NameInput.pure(value: 'joe').isNotValid, isFalse);
