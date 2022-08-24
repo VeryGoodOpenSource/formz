@@ -148,8 +148,8 @@ class _EmailTextFieldState extends State<_EmailTextField> {
         onChanged: cubit.emailChanged,
         decoration: InputDecoration(
           hintText: 'Enter your email',
-          helperText: email.validating ? 'Validating...' : null,
-          errorText: !email.validating
+          helperText: email.isValidating ? 'Validating...' : null,
+          errorText: !email.isValidating
               ? email.error?.map(
                   invalidFormat: (_) => 'Invalid email format',
                   alreadyExists: (_) => 'Email already exists',

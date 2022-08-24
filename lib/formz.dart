@@ -287,7 +287,7 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
     this.value, {
     this.isPure = true,
     this.error,
-    this.validating = false,
+    this.isValidating = false,
   });
 
   /// Constructor which create a `pure` [AsyncFormzInput] with a given value.
@@ -297,12 +297,12 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
   const AsyncFormzInput.dirty(
     T value, {
     E? error,
-    bool validating = false,
+    bool isValidating = false,
   }) : this(
           value,
           isPure: false,
           error: error,
-          validating: validating,
+          isValidating: isValidating,
         );
 
   @override
@@ -320,12 +320,12 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
   @override
   final E? error;
 
-  /// Whether the [FormzInput] value is busy validating.
-  final bool validating;
+  /// Whether the [FormzInput] value is busy isValidating.
+  final bool isValidating;
 
   @override
   int get hashCode =>
-      value.hashCode ^ isPure.hashCode ^ error.hashCode ^ validating.hashCode;
+      value.hashCode ^ isPure.hashCode ^ error.hashCode ^ isValidating.hashCode;
 
   @override
   bool operator ==(Object other) {
@@ -336,7 +336,7 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
         other.value == value &&
         other.isPure == isPure &&
         other.error == error &&
-        other.validating == validating;
+        other.isValidating == isValidating;
   }
 
   @override
@@ -345,6 +345,6 @@ $runtimeType(
   value: $value, 
   isPure: $isPure, 
   error: $error, 
-  validating: $validating
+  isValidating: $isValidating
 )''';
 }

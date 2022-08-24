@@ -11,7 +11,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
     String value, {
     bool isPure = true,
     AmountValidationError? error,
-    bool validating = false,
+    bool isValidating = false,
     this.isRequired = _kDefaultRequired,
     this.min = _kDefaultMin,
     this.max = _kDefaultMax,
@@ -19,7 +19,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
           value,
           isPure: isPure,
           error: error,
-          validating: validating,
+          isValidating: isValidating,
         );
 
   const Amount.pure({
@@ -32,7 +32,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
           isRequired: isRequired,
           min: min,
           max: max,
-          validating: false,
+          isValidating: false,
         );
 
   const Amount.dirty(
@@ -41,7 +41,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
     double min = _kDefaultMin,
     double max = _kDefaultMax,
     AmountValidationError? error,
-    bool validating = false,
+    bool isValidating = false,
   }) : this(
           value,
           isPure: false,
@@ -49,7 +49,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
           min: min,
           max: max,
           error: error,
-          validating: validating,
+          isValidating: isValidating,
         );
 
   final bool isRequired;
@@ -59,7 +59,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
   Amount copyWith({
     String? value,
     AmountValidationError? error,
-    bool? validating,
+    bool? isValidating,
     bool? isRequired,
     double? min,
     double? max,
@@ -69,7 +69,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
       newValue,
       isPure: isPure && newValue.isEmpty,
       error: error ?? this.error,
-      validating: validating ?? this.validating,
+      isValidating: isValidating ?? this.isValidating,
       isRequired: isRequired ?? this.isRequired,
       min: min ?? this.min,
       max: max ?? this.max,
@@ -78,7 +78,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
 
   Amount copyWithExceptError({
     String? value,
-    bool? validating,
+    bool? isValidating,
     bool? isRequired,
     double? min,
     double? max,
@@ -87,7 +87,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
     return Amount(
       newValue,
       isPure: isPure && newValue.isEmpty,
-      validating: validating ?? this.validating,
+      isValidating: isValidating ?? this.isValidating,
       isRequired: isRequired ?? this.isRequired,
       min: min ?? this.min,
       max: max ?? this.max,
@@ -113,7 +113,7 @@ Amount(
   isPure: $isPure, 
   value: '$value', 
   error: ${error.runtimeType}, 
-  validating: $validating, 
+  isValidating: $isValidating, 
   isRequired: $isRequired, 
   min: $min, 
   max: $max
@@ -125,7 +125,7 @@ Amount(
       value.hashCode ^
       isPure.hashCode ^
       error.hashCode ^
-      validating.hashCode ^
+      isValidating.hashCode ^
       isRequired.hashCode ^
       min.hashCode ^
       max.hashCode;
@@ -137,7 +137,7 @@ Amount(
         other.value == value &&
         other.isPure == isPure &&
         other.error == error &&
-        other.validating == validating &&
+        other.isValidating == isValidating &&
         other.isRequired == isRequired &&
         other.min == min &&
         other.max == max;

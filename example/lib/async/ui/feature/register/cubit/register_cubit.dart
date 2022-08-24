@@ -20,7 +20,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       state.copyWith(
         amount: state.amount.copyWithExceptError(
           value: value,
-          validating: true,
+          isValidating: true,
         ),
       ),
     );
@@ -28,7 +28,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       state.copyWith(
         amount: state.amount.copyWith(
           error: await _amountValidator.validate(state.amount),
-          validating: false,
+          isValidating: false,
         ),
       ),
     );
@@ -40,7 +40,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       state.copyWith(
         email: state.email.copyWithExceptError(
           value: value,
-          validating: true,
+          isValidating: true,
         ),
       ),
     );
@@ -48,7 +48,7 @@ class RegisterCubit extends Cubit<RegisterState> {
       state.copyWith(
         email: state.email.copyWith(
           error: await _emailValidator.validate(state.email),
-          validating: false,
+          isValidating: false,
         ),
       ),
     );

@@ -8,13 +8,13 @@ class Email extends AsyncFormzInput<String, EmailValidationError> {
     String value, {
     bool isPure = true,
     EmailValidationError? error,
-    bool validating = false,
+    bool isValidating = false,
     this.isRequired = _kDefaultRequired,
   }) : super(
           value,
           isPure: isPure,
           error: error,
-          validating: validating,
+          isValidating: isValidating,
         );
 
   const Email.pure({
@@ -23,20 +23,20 @@ class Email extends AsyncFormzInput<String, EmailValidationError> {
           '',
           isPure: true,
           isRequired: isRequired,
-          validating: false,
+          isValidating: false,
         );
 
   const Email.dirty(
     String value, {
     bool isRequired = _kDefaultRequired,
     EmailValidationError? error,
-    bool validating = false,
+    bool isValidating = false,
   }) : this(
           value,
           isPure: false,
           isRequired: isRequired,
           error: error,
-          validating: validating,
+          isValidating: isValidating,
         );
 
   final bool isRequired;
@@ -44,7 +44,7 @@ class Email extends AsyncFormzInput<String, EmailValidationError> {
   Email copyWith({
     String? value,
     EmailValidationError? error,
-    bool? validating,
+    bool? isValidating,
     bool? isRequired,
   }) {
     final newValue = value ?? this.value;
@@ -52,21 +52,21 @@ class Email extends AsyncFormzInput<String, EmailValidationError> {
       newValue,
       isPure: isPure && newValue.isEmpty,
       error: error ?? this.error,
-      validating: validating ?? this.validating,
+      isValidating: isValidating ?? this.isValidating,
       isRequired: isRequired ?? this.isRequired,
     );
   }
 
   Email copyWithExceptError({
     String? value,
-    bool? validating,
+    bool? isValidating,
     bool? isRequired,
   }) {
     final newValue = value ?? this.value;
     return Email(
       newValue,
       isPure: isPure && newValue.isEmpty,
-      validating: validating ?? this.validating,
+      isValidating: isValidating ?? this.isValidating,
       isRequired: isRequired ?? this.isRequired,
     );
   }
@@ -78,7 +78,7 @@ Email(
   isPure: $isPure, 
   value: '$value', 
   error: ${error.runtimeType}, 
-  validating: $validating, 
+  isValidating: $isValidating, 
   isRequired: $isRequired
 )''';
   }
@@ -88,7 +88,7 @@ Email(
       value.hashCode ^
       isPure.hashCode ^
       error.hashCode ^
-      validating.hashCode ^
+      isValidating.hashCode ^
       isRequired.hashCode;
 
   @override
@@ -100,7 +100,7 @@ Email(
         other.value == value &&
         other.isPure == isPure &&
         other.error == error &&
-        other.validating == validating &&
+        other.isValidating == isValidating &&
         other.isRequired == isRequired;
   }
 }
