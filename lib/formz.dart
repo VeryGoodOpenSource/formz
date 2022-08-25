@@ -245,6 +245,14 @@ abstract class AsyncFormzInputValidator<
   ///    return const EmailValidationError.required();
   ///  }
   ///
+  ///  final validFormat = RegVal.hasMatch(
+  ///    input.value,
+  ///    _kEmailPattern,
+  ///  );
+  ///  if (!validFormat) {
+  ///    return const EmailValidationError.invalidFormat();
+  ///  }
+  ///
   ///  final alreadyExist = await _emailRepository.findByAddress(input.value);
   ///  if (alreadyExist) {
   ///    return const EmailValidationError.alreadyExists();
@@ -255,22 +263,49 @@ abstract class AsyncFormzInputValidator<
   /// ```
   Future<TError?> validate(TInput input);
 
+  /// Returns whether the [TInput] is ready for validation.
+  ///
+  /// ```dart
+  /// @override
+  ///bool canValidate(Email input) {
+  ///  if (input.validationStatus.isValidated) {
+  ///    return true;
+  ///  }
+  ///  final validFormat = RegVal.hasMatch(
+  ///    input.value,
+  ///    _kEmailPattern,
+  ///  );
+  ///  return validFormat;
+  ///}
+  /// ```
   bool canValidate(TInput input) => true;
 }
 
+/// Enum representing the validation status of a [AsyncFormzInput] object.
 enum AsyncFormzInputValidationStatus {
+  /// Indicates whether the [AsyncFormzInput] has not been validated.
   pure,
+
+  /// Indicates whether the [AsyncFormzInput] is being validated.
   validating,
+
+  /// Indicates whether the [AsyncFormzInput] has been validated.
   validated,
 }
 
+/// Useful extensions on [AsyncFormzInputValidationStatus]
 extension AsyncFormzInputValidationStatusX on AsyncFormzInputValidationStatus {
+  /// Indicates whether the [AsyncFormzInput] has not been validated.
   bool get isPure => this == AsyncFormzInputValidationStatus.pure;
-  bool get isNotPure => !isPure;
+
+  /// Indicates whether the [AsyncFormzInput] is being validated.
   bool get isValidating => this == AsyncFormzInputValidationStatus.validating;
+
+  /// Indicates whether the [AsyncFormzInput] is not being validated.
   bool get isNotValidating => !isValidating;
+
+  /// Indicates whether the [AsyncFormzInput] is validated.
   bool get isValidated => this == AsyncFormzInputValidationStatus.validated;
-  bool get isNotValidated => !isValidated;
 }
 
 /// {@template form_input}
@@ -281,16 +316,16 @@ extension AsyncFormzInputValidationStatusX on AsyncFormzInputValidationStatus {
 /// instances.
 ///
 /// ```dart
-/// enum FirstNameError { empty }
-/// class FirstName extends FormzInput<String, FirstNameError> {
-///   const FirstName.pure({String value = ''}) : super.pure(value);
-///   const FirstName.dirty({String value = ''}) : super.dirty(value);
+///class Email extends AsyncFormzInput<String, EmailValidationError> {
+///  const Email(
+///    super.value, {
+///    super.error,
+///    super.validationStatus,
+///    this.isRequired = true,
+///  });
 ///
-///   @override
-///   FirstNameError? validator(String value) {
-///     return value.isEmpty ? FirstNameError.empty : null;
-///   }
-/// }
+///  final bool isRequired;
+///}
 /// ```
 /// {@endtemplate}
 @immutable
@@ -315,6 +350,7 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
   @override
   final E? error;
 
+  /// The validation status of the [AsyncFormzInput].
   final AsyncFormzInputValidationStatus validationStatus;
 
   @override
