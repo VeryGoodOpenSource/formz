@@ -158,58 +158,328 @@ void main() {
       });
     });
 
-    group('validate', () {
-      test('returns valid for empty inputs', () {
-        expect(Formz.validate([]), isTrue);
+    group('AsyncFormzInput', () {
+      test('value is correct', () {
+        expect(NameAsyncInput('joe').value, 'joe');
       });
 
-      test('returns valid for a pure/valid input', () {
-        expect(Formz.validate([NameInput.pure(value: 'joe')]), isTrue);
+      test('error is correct', () {
+        const error = NameAsyncInputError.empty;
+        final input = NameAsyncInput(
+          'joe',
+          error: error,
+        );
+        expect(input.error, error);
       });
 
-      test('returns valid for a dirty/valid input', () {
-        expect(Formz.validate([NameInput.dirty(value: 'joe')]), isTrue);
+      test('validationStatus is correct', () {
+        const validationStatus = AsyncFormzInputValidationStatus.validating;
+        final input = NameAsyncInput(
+          'joe',
+          validationStatus: validationStatus,
+        );
+        expect(input.validationStatus, validationStatus);
       });
 
-      test('returns valid for multiple valid inputs', () {
+      test('default validationStatus is correct', () {
+        final input = NameAsyncInput('joe');
+        expect(input.validationStatus, AsyncFormzInputValidationStatus.pure);
+      });
+
+      group('isValid is correct', () {
+        test('isValid is true when status is validated and error is null', () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+          );
+          expect(input.isValid, isTrue);
+        });
+        test('isValid is false when status is validated and error is not null',
+            () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+            error: NameAsyncInputError.empty,
+          );
+          expect(input.isValid, isFalse);
+        });
+        test('isValid is false when status not is validated and error is null',
+            () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.pure,
+          );
+          expect(input.isValid, isFalse);
+        });
+
+        test(
+            'isValid is false when status not is validated and error is not null',
+            () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.pure,
+            error: NameAsyncInputError.empty,
+          );
+          expect(input.isValid, isFalse);
+        });
+      });
+
+      group('isNotValid is correct', () {
+        test('isNotValid is false when status is validated and error is null',
+            () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+          );
+          expect(input.isNotValid, isFalse);
+        });
+        test(
+            'isNotValid is true when status is validated and error is not null',
+            () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+            error: NameAsyncInputError.empty,
+          );
+          expect(input.isNotValid, isTrue);
+        });
+        test(
+            'isNotValid is true when status not is validated and error is null',
+            () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.pure,
+          );
+          expect(input.isNotValid, isTrue);
+        });
+
+        test(
+            'isNotValid is true when status not is validated and error is not null',
+            () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.pure,
+            error: NameAsyncInputError.empty,
+          );
+          expect(input.isNotValid, isTrue);
+        });
+      });
+
+      test('hashCode is correct', () {
+        final input = NameAsyncInput(
+          'joe',
+          validationStatus: AsyncFormzInputValidationStatus.validated,
+          error: NameAsyncInputError.empty,
+        );
         expect(
-          Formz.validate([
-            NameInput.dirty(value: 'jen'),
-            NameInput.dirty(value: 'bob'),
-            NameInput.dirty(value: 'alex'),
+          input.hashCode,
+          Object.hashAll([
+            input.value,
+            input.error,
+            input.validationStatus,
           ]),
-          isTrue,
         );
       });
 
-      test('returns invalid for a pure/invalid input', () {
-        expect(Formz.validate([NameInput.pure()]), isFalse);
-      });
-
-      test('returns invalid for a dirty/invalid input', () {
-        expect(Formz.validate([NameInput.dirty()]), isFalse);
-      });
-
-      test('returns invalid for multiple invalid inputs', () {
+      test('== is value based', () {
         expect(
-          Formz.validate([
-            NameInput.dirty(),
-            NameInput.dirty(),
-            NameInput.dirty(),
-          ]),
-          isFalse,
+          NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+            error: NameAsyncInputError.empty,
+          ),
+          equals(
+            NameAsyncInput(
+              'joe',
+              validationStatus: AsyncFormzInputValidationStatus.validated,
+              error: NameAsyncInputError.empty,
+            ),
+          ),
+        );
+        expect(
+          NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+            error: NameAsyncInputError.empty,
+          ),
+          isNot(
+            equals(
+              NameAsyncInput(
+                'joe',
+                validationStatus: AsyncFormzInputValidationStatus.pure,
+                error: NameAsyncInputError.empty,
+              ),
+            ),
+          ),
+        );
+        expect(
+          NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+          ),
+          isNot(
+            equals(
+              NameAsyncInput(
+                'joe',
+                validationStatus: AsyncFormzInputValidationStatus.validated,
+                error: NameAsyncInputError.empty,
+              ),
+            ),
+          ),
+        );
+        expect(
+          NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.pure,
+            error: NameAsyncInputError.empty,
+          ),
+          isNot(
+            equals(
+              NameAsyncInput(
+                'joe',
+                validationStatus: AsyncFormzInputValidationStatus.validated,
+              ),
+            ),
+          ),
+        );
+        expect(
+          NameAsyncInput(
+            'jop',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+            error: NameAsyncInputError.empty,
+          ),
+          isNot(
+            equals(
+              NameAsyncInput(
+                'joe',
+                validationStatus: AsyncFormzInputValidationStatus.validated,
+                error: NameAsyncInputError.empty,
+              ),
+            ),
+          ),
         );
       });
 
-      test('returns invalid when at least one input is invalid', () {
+      test('toString is overridden correctly', () {
         expect(
-          Formz.validate([
-            NameInput.dirty(value: 'jan'),
-            NameInput.dirty(value: 'jim'),
-            NameInput.dirty(),
-          ]),
-          isFalse,
+          NameAsyncInput(
+            'joe',
+            error: NameAsyncInputError.empty,
+            validationStatus: AsyncFormzInputValidationStatus.pure,
+          ).toString(),
+          equals(
+            '''
+NameAsyncInput(
+  value: 'joe', 
+  error: NameAsyncInputError.empty, 
+  validationStatus: AsyncFormzInputValidationStatus.pure, 
+)''',
+          ),
         );
+      });
+    });
+
+    group('Formz.validate', () {
+      group('with FormzInput', () {
+        test('returns valid for empty inputs', () {
+          expect(Formz.validate([]), isTrue);
+        });
+
+        test('returns valid for a pure/valid input', () {
+          expect(Formz.validate([NameInput.pure(value: 'joe')]), isTrue);
+        });
+
+        test('returns valid for a dirty/valid input', () {
+          expect(Formz.validate([NameInput.dirty(value: 'joe')]), isTrue);
+        });
+
+        test('returns valid for multiple valid inputs', () {
+          expect(
+            Formz.validate([
+              NameInput.dirty(value: 'jen'),
+              NameInput.dirty(value: 'bob'),
+              NameInput.dirty(value: 'alex'),
+            ]),
+            isTrue,
+          );
+        });
+
+        test('returns invalid for a pure/invalid input', () {
+          expect(Formz.validate([NameInput.pure()]), isFalse);
+        });
+
+        test('returns invalid for a dirty/invalid input', () {
+          expect(Formz.validate([NameInput.dirty()]), isFalse);
+        });
+
+        test('returns invalid for multiple invalid inputs', () {
+          expect(
+            Formz.validate([
+              NameInput.dirty(),
+              NameInput.dirty(),
+              NameInput.dirty(),
+            ]),
+            isFalse,
+          );
+        });
+
+        test('returns invalid when at least one input is invalid', () {
+          expect(
+            Formz.validate([
+              NameInput.dirty(value: 'jan'),
+              NameInput.dirty(value: 'jim'),
+              NameInput.dirty(),
+            ]),
+            isFalse,
+          );
+        });
+      });
+      group('with AsyncFormzInput', () {
+        test('returns valid for empty inputs', () {
+          expect(Formz.validate([]), isTrue);
+        });
+
+        test('returns valid for a valid input', () {
+          final input = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+          );
+          expect(Formz.validate([input]), isTrue);
+        });
+
+        test('returns invalid for a invalid input', () {
+          final input = NameAsyncInput(
+            'joe',
+            error: NameAsyncInputError.empty,
+          );
+          expect(Formz.validate([input]), isFalse);
+        });
+
+        test('returns invalid for multiple invalid inputs', () {
+          final input = NameAsyncInput(
+            'joe',
+            error: NameAsyncInputError.empty,
+          );
+          expect(
+            Formz.validate([input, input, input]),
+            isFalse,
+          );
+        });
+
+        test('returns invalid when at least one input is invalid', () {
+          final validInput = NameAsyncInput(
+            'joe',
+            validationStatus: AsyncFormzInputValidationStatus.validated,
+          );
+          final invalidInput = NameAsyncInput(
+            'joe',
+            error: NameAsyncInputError.empty,
+          );
+          expect(
+            Formz.validate([validInput, validInput, invalidInput]),
+            isFalse,
+          );
+        });
       });
     });
 
@@ -232,6 +502,34 @@ void main() {
 
       test('isCanceled returns true', () {
         expect(FormzSubmissionStatus.canceled.isCanceled, isTrue);
+      });
+    });
+
+    group('AsyncFormzInputValidationStatusX', () {
+      test('isPure returns true', () {
+        expect(AsyncFormzInputValidationStatus.pure.isPure, isTrue);
+      });
+      test('isValidating returns true', () {
+        expect(AsyncFormzInputValidationStatus.validating.isValidating, isTrue);
+      });
+      test('isNotValidating returns false', () {
+        expect(
+          AsyncFormzInputValidationStatus.validating.isNotValidating,
+          isFalse,
+        );
+      });
+      test('isValidated returns true', () {
+        expect(AsyncFormzInputValidationStatus.validated.isValidated, isTrue);
+      });
+    });
+
+    group('AsyncFormzInputValidator', () {
+      group('canValidate', () {
+        test('default value is correct', () {
+          final validator = NameAsyncFormzInputValidator();
+          final input = NameAsyncInput('joe');
+          expect(validator.canValidate(input), isTrue);
+        });
       });
     });
   });

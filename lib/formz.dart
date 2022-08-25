@@ -198,7 +198,7 @@ mixin FormzMixin {
   ///
   /// Override this and give it all [FormzInput]s in your class that should be
   /// validated automatically.
-  List<FormzInput<dynamic, dynamic>> get inputs;
+  List<FormzInputBase> get inputs;
 }
 
 /// {@template async_form_input}
@@ -354,9 +354,7 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
   final AsyncFormzInputValidationStatus validationStatus;
 
   @override
-  int get hashCode =>
-      value.hashCode ^ error.hashCode ^ validationStatus.hashCode;
-
+  int get hashCode => Object.hashAll([value, error, validationStatus]);
   @override
   bool operator ==(Object other) {
     if (other.runtimeType != runtimeType) {
@@ -371,8 +369,8 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
   @override
   String toString() => '''
 $runtimeType(
-  value: $value, 
+  value: '$value', 
   error: $error, 
-  validationStatus: ${validationStatus.name}
+  validationStatus: $validationStatus, 
 )''';
 }
