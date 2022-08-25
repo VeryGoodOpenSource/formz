@@ -213,7 +213,7 @@ void main() {
         });
 
         test(
-            'isValid is false when status not is validated and error is not null',
+            '''isValid is false when status not is validated and error is not null''',
             () {
           final input = NameAsyncInput(
             'joe',
@@ -254,7 +254,7 @@ void main() {
         });
 
         test(
-            'isNotValid is true when status not is validated and error is not null',
+            '''isNotValid is true when status not is validated and error is not null''',
             () {
           final input = NameAsyncInput(
             'joe',

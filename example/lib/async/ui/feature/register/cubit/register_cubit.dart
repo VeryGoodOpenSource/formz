@@ -16,42 +16,52 @@ class RegisterCubit extends Cubit<RegisterState> {
   final EmailValidator _emailValidator;
 
   Future<void> amountChanged(String value) async {
-    emit(state.copyWith(
-      amount: state.amount.copyWithResetError(
-        value: value,
-        validationStatus: AsyncFormzInputValidationStatus.validating,
+    emit(
+      state.copyWith(
+        amount: state.amount.copyWithResetError(
+          value: value,
+          validationStatus: AsyncFormzInputValidationStatus.validating,
+        ),
       ),
-    ));
+    );
     final error = await _amountValidator.validate(state.amount);
-    emit(state.copyWith(
-      amount: state.amount.copyWith(
-        error: error,
-        validationStatus: AsyncFormzInputValidationStatus.validated,
+    emit(
+      state.copyWith(
+        amount: state.amount.copyWith(
+          error: error,
+          validationStatus: AsyncFormzInputValidationStatus.validated,
+        ),
       ),
-    ));
+    );
     _updateFormState();
   }
 
   Future<void> emailChanged(String value) async {
-    emit(state.copyWith(
-      email: state.email.copyWithResetError(value: value),
-    ));
+    emit(
+      state.copyWith(
+        email: state.email.copyWithResetError(value: value),
+      ),
+    );
     final canValidate = _emailValidator.canValidate(state.email);
     if (!canValidate) {
       return;
     }
-    emit(state.copyWith(
-      email: state.email.copyWith(
-        validationStatus: AsyncFormzInputValidationStatus.validating,
+    emit(
+      state.copyWith(
+        email: state.email.copyWith(
+          validationStatus: AsyncFormzInputValidationStatus.validating,
+        ),
       ),
-    ));
+    );
     final error = await _emailValidator.validate(state.email);
-    emit(state.copyWith(
-      email: state.email.copyWith(
-        error: error,
-        validationStatus: AsyncFormzInputValidationStatus.validated,
+    emit(
+      state.copyWith(
+        email: state.email.copyWith(
+          error: error,
+          validationStatus: AsyncFormzInputValidationStatus.validated,
+        ),
       ),
-    ));
+    );
     _updateFormState();
   }
 

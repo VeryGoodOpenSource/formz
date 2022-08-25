@@ -183,15 +183,23 @@ class _Label extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final valStatus = _getValidationStatusText(input.validationStatus);
-    return Text.rich(TextSpan(children: [
-      const TextSpan(
-        text: 'Email',
-      ),
+    return Text.rich(
       TextSpan(
-        text: ' (is_valid: ${input.isValid}, validation_status: $valStatus)',
-        style: const TextStyle(color: Colors.grey, fontWeight: FontWeight.w200),
+        children: [
+          const TextSpan(
+            text: 'Email',
+          ),
+          TextSpan(
+            text:
+                ' (is_valid: ${input.isValid}, validation_status: $valStatus)',
+            style: const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w200,
+            ),
+          ),
+        ],
       ),
-    ]));
+    );
   }
 
   String _getValidationStatusText(AsyncFormzInputValidationStatus status) {
