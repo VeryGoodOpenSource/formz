@@ -17,12 +17,16 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> amountChanged(String value) async {
     emit(state.copyWith(
-      amount: state.amount.copyWithErrorReset(value: value),
+      amount: state.amount.copyWithErrorReset(
+        value: value,
+        validationStatus: AsyncFormzInputValidationStatus.validating,
+      ),
     ));
     final error = await _amountValidator.validate(state.amount);
     emit(state.copyWith(
       amount: state.amount.copyWith(
         error: error,
+        validationStatus: AsyncFormzInputValidationStatus.validated,
       ),
     ));
     _updateFormState();
