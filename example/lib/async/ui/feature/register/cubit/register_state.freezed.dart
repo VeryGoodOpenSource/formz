@@ -114,8 +114,8 @@ class __$$_RegisterStateCopyWithImpl<$Res>
 class _$_RegisterState implements _RegisterState {
   _$_RegisterState(
       {this.isFormValid = false,
-      this.amount = const Amount.pure(max: 100),
-      this.email = const Email.pure()});
+      this.amount = const Amount('', max: 0.5),
+      this.email = const Email('')});
 
   @override
   @JsonKey()

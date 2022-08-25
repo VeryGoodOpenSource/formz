@@ -3,6 +3,7 @@ import 'package:example/async/ui/shared/components/form_label.dart';
 import 'package:example/async/ui/shared/forms/inputs/amount_input.dart';
 import 'package:example/async/ui/shared/forms/inputs/email_input.dart';
 import 'package:flutter/material.dart';
+import 'package:formz/formz.dart';
 import 'package:provider/provider.dart';
 
 class RegisterView extends StatelessWidget {
@@ -148,8 +149,9 @@ class _EmailTextFieldState extends State<_EmailTextField> {
         onChanged: cubit.emailChanged,
         decoration: InputDecoration(
           hintText: 'Enter your email',
-          helperText: email.isValidating ? 'Validating...' : null,
-          errorText: !email.isValidating
+          helperText:
+              email.validationStatus.isValidating ? 'Validating...' : null,
+          errorText: email.validationStatus.isNotValidating
               ? email.error?.map(
                   invalidFormat: (_) => 'Invalid email format',
                   alreadyExists: (_) => 'Email already exists',

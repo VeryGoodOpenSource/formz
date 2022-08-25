@@ -62,16 +62,6 @@ abstract class FormzInputBase<T, E> {
   /// the value could be 'Joe'.
   T get value;
 
-  /// If the [FormzInput] is pure (has been touched/modified).
-  /// Typically when the `FormzInput` is initially created,
-  /// it is created using the `FormzInput.pure` constructor to
-  /// signify that the user has not modified it.
-  ///
-  /// For subsequent changes (in response to user input), the
-  /// `FormzInput.dirty` constructor should be used to signify that
-  /// the `FormzInput` has been manipulated.
-  bool get isPure;
-
   /// Whether the [FormzInput] value is valid according to the
   /// overridden `validator`.
   ///
@@ -121,7 +111,14 @@ abstract class FormzInput<T, E> implements FormzInputBase<T, E> {
   @override
   final T value;
 
-  @override
+  /// If the [FormzInput] is pure (has been touched/modified).
+  /// Typically when the `FormzInput` is initially created,
+  /// it is created using the `FormzInput.pure` constructor to
+  /// signify that the user has not modified it.
+  ///
+  /// For subsequent changes (in response to user input), the
+  /// `FormzInput.dirty` constructor should be used to signify that
+  /// the `FormzInput` has been manipulated.
   final bool isPure;
 
   @override
@@ -256,8 +253,24 @@ abstract class AsyncFormzInputValidator<
   ///  return null;
   ///}
   /// ```
-  @protected
   Future<TError?> validate(TInput input);
+
+  bool canValidate(TInput input) => true;
+}
+
+enum AsyncFormzInputValidationStatus {
+  pure,
+  validating,
+  validated,
+}
+
+extension AsyncFormzInputValidationStatusX on AsyncFormzInputValidationStatus {
+  bool get isPure => this == AsyncFormzInputValidationStatus.pure;
+  bool get isNotPure => !isPure;
+  bool get isValidating => this == AsyncFormzInputValidationStatus.validating;
+  bool get isNotValidating => !isValidating;
+  bool get isValidated => this == AsyncFormzInputValidationStatus.validated;
+  bool get isNotValidated => !isValidated;
 }
 
 /// {@template form_input}
@@ -285,34 +298,16 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
   /// Constructor which create a [FormzInput] with a given value.
   const AsyncFormzInput(
     this.value, {
-    this.isPure = true,
     this.error,
-    this.isValidating = false,
-  });
-
-  /// Constructor which create a `pure` [AsyncFormzInput] with a given value.
-  const AsyncFormzInput.pure(T value) : this(value);
-
-  /// Constructor which create a `dirty` [AsyncFormzInput] with a given value.
-  const AsyncFormzInput.dirty(
-    T value, {
-    E? error,
-    bool isValidating = false,
-  }) : this(
-          value,
-          isPure: false,
-          error: error,
-          isValidating: isValidating,
-        );
+    AsyncFormzInputValidationStatus? validationStatus,
+  }) : validationStatus =
+            validationStatus ?? AsyncFormzInputValidationStatus.pure;
 
   @override
   final T value;
 
   @override
-  final bool isPure;
-
-  @override
-  bool get isValid => error == null;
+  bool get isValid => validationStatus.isValidated && error == null;
 
   @override
   bool get isNotValid => !isValid;
@@ -320,12 +315,11 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
   @override
   final E? error;
 
-  /// Whether the [FormzInput] value is busy isValidating.
-  final bool isValidating;
+  final AsyncFormzInputValidationStatus validationStatus;
 
   @override
   int get hashCode =>
-      value.hashCode ^ isPure.hashCode ^ error.hashCode ^ isValidating.hashCode;
+      value.hashCode ^ error.hashCode ^ validationStatus.hashCode;
 
   @override
   bool operator ==(Object other) {
@@ -334,17 +328,15 @@ abstract class AsyncFormzInput<T, E> implements FormzInputBase<T, E> {
     }
     return other is AsyncFormzInput<T, E> &&
         other.value == value &&
-        other.isPure == isPure &&
         other.error == error &&
-        other.isValidating == isValidating;
+        other.validationStatus == validationStatus;
   }
 
   @override
   String toString() => '''
 $runtimeType(
   value: $value, 
-  isPure: $isPure, 
   error: $error, 
-  isValidating: $isValidating
+  validationStatus: ${validationStatus.name}
 )''';
 }

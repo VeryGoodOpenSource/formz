@@ -15,6 +15,18 @@ class EmailValidator
   final EmailRepository _emailRepository;
 
   @override
+  bool canValidate(Email input) {
+    if (input.validationStatus.isValidated) {
+      return true;
+    }
+    final validFormat = RegVal.hasMatch(
+      input.value,
+      _kEmailPattern,
+    );
+    return validFormat;
+  }
+
+  @override
   Future<EmailValidationError?> validate(Email input) async {
     if (input.isRequired && input.value.isEmpty) {
       return const EmailValidationError.required();

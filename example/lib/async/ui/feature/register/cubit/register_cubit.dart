@@ -16,42 +16,38 @@ class RegisterCubit extends Cubit<RegisterState> {
   final EmailValidator _emailValidator;
 
   Future<void> amountChanged(String value) async {
-    emit(
-      state.copyWith(
-        amount: state.amount.copyWithExceptError(
-          value: value,
-          isValidating: true,
-        ),
+    emit(state.copyWith(
+      amount: state.amount.copyWithErrorReset(value: value),
+    ));
+    final error = await _amountValidator.validate(state.amount);
+    emit(state.copyWith(
+      amount: state.amount.copyWith(
+        error: error,
       ),
-    );
-    emit(
-      state.copyWith(
-        amount: state.amount.copyWith(
-          error: await _amountValidator.validate(state.amount),
-          isValidating: false,
-        ),
-      ),
-    );
+    ));
     _updateFormState();
   }
 
   Future<void> emailChanged(String value) async {
-    emit(
-      state.copyWith(
-        email: state.email.copyWithExceptError(
-          value: value,
-          isValidating: true,
-        ),
+    emit(state.copyWith(
+      email: state.email.copyWithErrorReset(value: value),
+    ));
+    final canValidate = _emailValidator.canValidate(state.email);
+    if (!canValidate) {
+      return;
+    }
+    emit(state.copyWith(
+      email: state.email.copyWith(
+        validationStatus: AsyncFormzInputValidationStatus.validating,
       ),
-    );
-    emit(
-      state.copyWith(
-        email: state.email.copyWith(
-          error: await _emailValidator.validate(state.email),
-          isValidating: false,
-        ),
+    ));
+    final error = await _emailValidator.validate(state.email);
+    emit(state.copyWith(
+      email: state.email.copyWith(
+        error: error,
+        validationStatus: AsyncFormzInputValidationStatus.validated,
       ),
-    );
+    ));
     _updateFormState();
   }
 
