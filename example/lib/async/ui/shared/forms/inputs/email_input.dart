@@ -26,7 +26,7 @@ class Email extends AsyncFormzInput<String, EmailValidationError> {
     );
   }
 
-  Email copyWithErrorReset({
+  Email copyWithResetError({
     String? value,
     AsyncFormzInputValidationStatus? validationStatus,
     bool? isRequired,

@@ -17,7 +17,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> amountChanged(String value) async {
     emit(state.copyWith(
-      amount: state.amount.copyWithErrorReset(
+      amount: state.amount.copyWithResetError(
         value: value,
         validationStatus: AsyncFormzInputValidationStatus.validating,
       ),
@@ -34,7 +34,7 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   Future<void> emailChanged(String value) async {
     emit(state.copyWith(
-      email: state.email.copyWithErrorReset(value: value),
+      email: state.email.copyWithResetError(value: value),
     ));
     final canValidate = _emailValidator.canValidate(state.email);
     if (!canValidate) {

@@ -34,7 +34,7 @@ class Amount extends AsyncFormzInput<String, AmountValidationError> {
     );
   }
 
-  Amount copyWithErrorReset({
+  Amount copyWithResetError({
     String? value,
     AsyncFormzInputValidationStatus? validationStatus,
     bool? isRequired,
