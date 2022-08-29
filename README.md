@@ -56,6 +56,118 @@ print(joe.error); // null
 print(name.displayError); // null
 ```
 
+## Create a AsyncFormzInput
+```dart
+
+class Email extends AsyncFormzInput<String, EmailValidationError> {
+  const Email(
+    super.value, {
+    super.error,
+    super.validationStatus,
+    this.isRequired = true,
+  });
+
+  final bool isRequired;
+
+  Email copyWith({
+    String? value,
+    EmailValidationError? error,
+    AsyncFormzInputValidationStatus? validationStatus,
+    bool? isValidating,
+    bool? isRequired,
+  }) {
+    return Email(
+      value ?? this.value,
+      error: error ?? this.error,
+      validationStatus: validationStatus ?? this.validationStatus,
+      isRequired: isRequired ?? this.isRequired,
+    );
+  }
+
+  Email copyWithResetError({
+    String? value,
+    AsyncFormzInputValidationStatus? validationStatus,
+    bool? isRequired,
+  }) {
+    return Email(
+      value ?? this.value,
+      validationStatus: validationStatus ?? this.validationStatus,
+      isRequired: isRequired ?? this.isRequired,
+    );
+  }
+}
+```
+
+## Create a AsyncFormzInput
+```dart
+class EmailValidator  extends AsyncFormzInputValidator<Email, String, EmailValidationError> {
+  const EmailValidator({
+    required EmailRepository emailRepository,
+  }) : _emailRepository = emailRepository;
+
+  final EmailRepository _emailRepository;
+
+  @override
+  bool canValidate(Email input) {
+    if (input.validationStatus.isValidated) {
+      return true;
+    }
+    final validFormat = RegVal.hasMatch(
+      input.value,
+      _kEmailPattern,
+    );
+    return validFormat;
+  }
+
+  @override
+  Future<EmailValidationError?> validate(Email input) async {
+    if (input.isRequired && input.value.isEmpty) {
+      return const EmailValidationError.required();
+    }
+
+    final validFormat = RegVal.hasMatch(
+      input.value,
+      _kEmailPattern,
+    );
+    if (!validFormat) {
+      return const EmailValidationError.invalidFormat();
+    }
+
+    final alreadyExist = await _emailRepository.findByAddress(input.value);
+    if (alreadyExist) {
+      return const EmailValidationError.alreadyExists();
+    }
+
+    return null;
+  }
+}
+```
+
+## Interact with a AsyncFormzInput and AsyncFormzInputValidator using Bloc
+```dart
+Future<void> emailChanged(String value) async {
+  emit(state.copyWith(
+    email: state.email.copyWithResetError(value: value),
+  ));
+  final canValidate = _emailValidator.canValidate(state.email);
+  if (!canValidate) {
+    return;
+  }
+  emit(state.copyWith(
+    email: state.email.copyWith(
+      validationStatus: AsyncFormzInputValidationStatus.validating,
+    ),
+  ));
+  final error = await _emailValidator.validate(state.email);
+  emit(state.copyWith(
+    email: state.email.copyWith(
+      error: error,
+      validationStatus: AsyncFormzInputValidationStatus.validated,
+    ),
+  ));
+}
+```
+
 ## Validate Multiple FormzInput Items
 
 ```dart
