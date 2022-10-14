@@ -130,7 +130,7 @@ abstract class FormzInput<T, E> {
 class Formz {
   /// Returns a [bool] given a list of [FormzInput] indicating whether
   /// the inputs are all valid.
-  static bool validate(List<FormzInput> inputs) {
+  static bool validate(List<FormzInput<dynamic, dynamic>> inputs) {
     return inputs.every((input) => input.isValid);
   }
 }
@@ -166,5 +166,5 @@ mixin FormzMixin {
   ///
   /// Override this and give it all [FormzInput]s in your class that should be
   /// validated automatically.
-  List<FormzInput> get inputs;
+  List<FormzInput<dynamic, dynamic>> get inputs;
 }
