@@ -18,5 +18,5 @@ class NameInputFormzMixin with FormzMixin {
   final NameInput name;
 
   @override
-  List<FormzInput> get inputs => [name];
+  List<FormzInput<dynamic, dynamic>> get inputs => [name];
 }

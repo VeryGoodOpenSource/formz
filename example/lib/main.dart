@@ -185,7 +185,7 @@ class MyFormState with FormzMixin {
   }
 
   @override
-  List<FormzInput> get inputs => [email, password];
+  List<FormzInput<dynamic, dynamic>> get inputs => [email, password];
 }
 
 enum EmailValidationError { invalid }
