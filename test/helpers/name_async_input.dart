@@ -13,7 +13,7 @@ class NameAsyncInput extends AsyncFormzInput<String, NameAsyncInputError> {
 class NameAsyncFormzInputValidator extends AsyncFormzInputValidator<
     NameAsyncInput, String, NameAsyncInputError> {
   @override
-  Future<NameAsyncInputError> validate(AsyncFormzInput input) async {
+  Future<NameAsyncInputError> validate(NameAsyncInput input) async {
     throw UnimplementedError();
   }
 }

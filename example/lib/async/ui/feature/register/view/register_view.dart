@@ -92,8 +92,7 @@ class _AmountTextFieldState extends State<_AmountTextField> {
       textController.text = amount.value;
     }
     return FormLabel(
-      label: _Label(
-        text: 'Amount',
+      label: _AmountLabel(
         input: amount,
       ),
       child: TextFormField(
@@ -145,8 +144,7 @@ class _EmailTextFieldState extends State<_EmailTextField> {
       textController.text = email.value;
     }
     return FormLabel(
-      label: _Label(
-        text: 'E-mail',
+      label: _EmailLabel(
         input: email,
       ),
       child: TextFormField(
@@ -171,14 +169,12 @@ class _EmailTextFieldState extends State<_EmailTextField> {
   }
 }
 
-class _Label extends StatelessWidget {
-  const _Label({
-    required this.text,
+class _EmailLabel extends StatelessWidget {
+  const _EmailLabel({
     required this.input,
   });
 
-  final String text;
-  final AsyncFormzInput input;
+  final Email input;
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +184,44 @@ class _Label extends StatelessWidget {
         children: [
           const TextSpan(
             text: 'Email',
+          ),
+          TextSpan(
+            text:
+                ' (is_valid: ${input.isValid}, validation_status: $valStatus)',
+            style: const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w200,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getValidationStatusText(AsyncFormzInputValidationStatus status) {
+    return status.isPure
+        ? 'pure'
+        : status.isValidating
+            ? 'validating'
+            : 'validated';
+  }
+}
+
+class _AmountLabel extends StatelessWidget {
+  const _AmountLabel({
+    required this.input,
+  });
+
+  final Amount input;
+
+  @override
+  Widget build(BuildContext context) {
+    final valStatus = _getValidationStatusText(input.validationStatus);
+    return Text.rich(
+      TextSpan(
+        children: [
+          const TextSpan(
+            text: 'Amount',
           ),
           TextSpan(
             text:

@@ -6,7 +6,7 @@ import 'package:formz/formz.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyForm extends StatefulWidget {
-  const MyForm({Key? key}) : super(key: key);
+  const MyForm({super.key});
 
   @override
   State<MyForm> createState() => _MyFormState();
@@ -191,7 +191,9 @@ class MyFormState with FormzMixin {
 enum EmailValidationError { invalid }
 
 class Email extends FormzInput<String, EmailValidationError> {
+  // ignore: use_super_parameters
   const Email.pure([String value = '']) : super.pure(value);
+  // ignore: use_super_parameters
   const Email.dirty([String value = '']) : super.dirty(value);
 
   static final _emailRegExp = RegExp(
@@ -207,7 +209,9 @@ class Email extends FormzInput<String, EmailValidationError> {
 enum PasswordValidationError { invalid }
 
 class Password extends FormzInput<String, PasswordValidationError> {
+  // ignore: use_super_parameters
   const Password.pure([String value = '']) : super.pure(value);
+  // ignore: use_super_parameters
   const Password.dirty([String value = '']) : super.dirty(value);
 
   static final _passwordRegex =

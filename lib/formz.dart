@@ -162,7 +162,7 @@ abstract class FormzInput<T, E> implements FormzInputBase<T, E> {
 class Formz {
   /// Returns a [bool] given a list of [FormzInput] indicating whether
   /// the inputs are all valid.
-  static bool validate(List<FormzInputBase> inputs) {
+  static bool validate(List<FormzInputBase<dynamic, dynamic>> inputs) {
     return inputs.every((input) => input.isValid);
   }
 }
@@ -198,7 +198,7 @@ mixin FormzMixin {
   ///
   /// Override this and give it all [FormzInput]s in your class that should be
   /// validated automatically.
-  List<FormzInputBase> get inputs;
+  List<FormzInputBase<dynamic, dynamic>> get inputs;
 }
 
 /// {@template async_form_input}
