@@ -2,6 +2,7 @@
 import 'package:formz/formz.dart';
 import 'package:test/test.dart';
 
+import 'helpers/formz_input_test_object.dart';
 import 'helpers/helpers.dart';
 
 void main() {
@@ -530,6 +531,15 @@ NameAsyncInput(
           final input = NameAsyncInput('joe');
           expect(validator.canValidate(input), isTrue);
         });
+      });
+    });
+
+    group('FormzInputBase', () {
+      test('isNotValid is reversed of isValid', () {
+        final input = FormzInputIsValidTestObject(
+          isValid: true,
+        );
+        expect(input.isNotValid, !input.isValid);
       });
     });
   });
