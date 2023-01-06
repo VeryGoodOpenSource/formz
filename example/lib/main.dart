@@ -129,7 +129,7 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Email',
               helperText: 'A valid email e.g. joe.doe@gmail.com',
             ),
-            validator: (_) => _state.email.displayError?.text(),
+            validator: (_) => _state.email.displayErrorMessage,
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
           ),
@@ -143,7 +143,7 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Password',
               errorMaxLines: 2,
             ),
-            validator: (_) => _state.password.displayError?.text(),
+            validator: (_) => _state.password.displayErrorMessage,
             obscureText: true,
             textInputAction: TextInputAction.done,
           ),
@@ -202,6 +202,14 @@ class Email extends FormzInput<String, EmailValidationError> {
   EmailValidationError? validator(String value) {
     return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
   }
+
+  @override
+  String? validatorMessage(EmailValidationError? error) {
+    if (error == EmailValidationError.invalid) {
+      return 'Please ensure the email entered is valid';
+    }
+    return null;
+  }
 }
 
 enum PasswordValidationError { invalid }
@@ -219,22 +227,12 @@ class Password extends FormzInput<String, PasswordValidationError> {
         ? null
         : PasswordValidationError.invalid;
   }
-}
 
-extension on EmailValidationError {
-  String text() {
-    switch (this) {
-      case EmailValidationError.invalid:
-        return 'Please ensure the email entered is valid';
+  @override
+  String? validatorMessage(PasswordValidationError? error) {
+    if (error == PasswordValidationError.invalid) {
+      return '''Password must be at least 8 characters and contain at least one letter and number''';
     }
-  }
-}
-
-extension on PasswordValidationError {
-  String text() {
-    switch (this) {
-      case PasswordValidationError.invalid:
-        return '''Password must be at least 8 characters and contain at least one letter and number''';
-    }
+    return null;
   }
 }

@@ -98,13 +98,25 @@ abstract class FormzInput<T, E> {
   /// Returns `null` if the [FormzInput] is valid.
   E? get error => validator(value);
 
+  /// Returns a [String] error message if the [FormzInput] is invalid.
+  /// Returns `null` if the [FormzInput] is valid.
+  String? get errorMessage => validatorMessage(error);
+
   /// The error to display if the [FormzInput] value
   /// is not valid and has been modified.
   E? get displayError => isPure ? null : error;
 
+  /// The [String] error message to display if the [FormzInput] value
+  /// is not valid and has been modified.
+  String? get displayErrorMessage => isPure ? null : errorMessage;
+
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
   E? validator(T value);
+
+  /// A function that must return an error message if the [FormzInput]
+  /// is invalid and `null` otherwise.
+  String? validatorMessage(E? error);
 
   @override
   int get hashCode => Object.hashAll([value, isPure]);

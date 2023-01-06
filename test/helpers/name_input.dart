@@ -10,6 +10,14 @@ class NameInput extends FormzInput<String, NameInputError> {
   NameInputError? validator(String value) {
     return value.isEmpty ? NameInputError.empty : null;
   }
+
+  @override
+  String? validatorMessage(NameInputError? error) {
+    if (error == NameInputError.empty) {
+      return 'Obligatory field';
+    }
+    return null;
+  }
 }
 
 class NameInputFormzMixin with FormzMixin {
