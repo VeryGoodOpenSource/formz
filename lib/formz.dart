@@ -85,7 +85,7 @@ abstract class FormzInput<T, E> {
   ///
   /// Returns `true` if `validator` returns `null` for the
   /// current [FormzInput] value and `false` otherwise.
-  bool get isValid => validator(value) == null;
+  bool get isValid => _checkResultsMap() == null;
 
   /// Whether the [FormzInput] value is not valid.
   /// A value is invalid when the overridden `validator`
@@ -94,7 +94,18 @@ abstract class FormzInput<T, E> {
 
   /// Returns a validation error if the [FormzInput] is invalid.
   /// Returns `null` if the [FormzInput] is valid.
-  E? get error => validator(value);
+  E? get error => _checkResultsMap();
+
+  E? _checkResultsMap() {
+    dynamic error;
+    if (!_forms._resMap.containsKey(this)) {
+      error = validator(value);
+      _forms._resMap.addAll({this: error});
+    } else {
+      error = _forms._resMap[this];
+    }
+    return error as E?;
+  }
 
   /// The error to display if the [FormzInput] value
   /// is not valid and has been modified.
@@ -103,6 +114,8 @@ abstract class FormzInput<T, E> {
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
   E? validator(T value);
+
+  static final _forms = _Results();
 
   @override
   int get hashCode => Object.hashAll([value, isPure]);
@@ -121,6 +134,10 @@ abstract class FormzInput<T, E> {
         ? '''FormzInput<$T, $E>.pure(value: $value, isValid: $isValid, error: $error)'''
         : '''FormzInput<$T, $E>.dirty(value: $value, isValid: $isValid, error: $error)''';
   }
+}
+
+class _Results<E> {
+  final Map<FormzInput, E?> _resMap = Map();
 }
 
 /// Class which contains methods that help manipulate and manage
