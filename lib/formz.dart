@@ -97,14 +97,14 @@ abstract class FormzInput<T, E> {
   E? get error => _checkResultsMap();
 
   E? _checkResultsMap() {
-    dynamic error;
-    if (!_forms._resMap.containsKey(this)) {
+    E? error;
+    if (!_forms<T, E>().resMap.containsKey(this)) {
       error = validator(value);
-      _forms._resMap.addAll({this: error});
+      _forms<T, E>().resMap[this] = error;
     } else {
-      error = _forms._resMap[this];
+      error = _forms<T, E>().resMap[this];
     }
-    return error as E?;
+    return error;
   }
 
   /// The error to display if the [FormzInput] value
@@ -115,7 +115,8 @@ abstract class FormzInput<T, E> {
   /// [value] is invalid and `null` otherwise.
   E? validator(T value);
 
-  static final _forms = _Results();
+  static _Results<T, E> _forms<T, E>() =>
+  _Results<T, E>();
 
   @override
   int get hashCode => Object.hashAll([value, isPure]);
@@ -136,8 +137,10 @@ abstract class FormzInput<T, E> {
   }
 }
 
-class _Results<E> {
-  final Map<FormzInput, E?> _resMap = Map();
+class _Results<T, E> {
+  final Map<FormzInput<T, E>, E?> _resMap = {};
+
+  Map<FormzInput<T, E>, E?> get resMap => _resMap;
 }
 
 /// Class which contains methods that help manipulate and manage
