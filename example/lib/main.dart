@@ -6,7 +6,7 @@ import 'package:formz/formz.dart';
 void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyForm extends StatefulWidget {
-  const MyForm({Key? key}) : super(key: key);
+  const MyForm({super.key});
 
   @override
   State<MyForm> createState() => _MyFormState();
@@ -191,8 +191,8 @@ class MyFormState with FormzMixin {
 enum EmailValidationError { invalid }
 
 class Email extends FormzInput<String, EmailValidationError> {
-  const Email.pure([String value = '']) : super.pure(value);
-  const Email.dirty([String value = '']) : super.dirty(value);
+  const Email.pure([super.value = '']) : super.pure();
+  const Email.dirty([super.value = '']) : super.dirty();
 
   static final _emailRegExp = RegExp(
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
@@ -207,8 +207,8 @@ class Email extends FormzInput<String, EmailValidationError> {
 enum PasswordValidationError { invalid }
 
 class Password extends FormzInput<String, PasswordValidationError> {
-  const Password.pure([String value = '']) : super.pure(value);
-  const Password.dirty([String value = '']) : super.dirty(value);
+  const Password.pure([super.value = '']) : super.pure();
+  const Password.dirty([super.value = '']) : super.dirty();
 
   static final _passwordRegex =
       RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
