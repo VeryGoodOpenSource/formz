@@ -19,7 +19,7 @@ void main() {
         expect(form.isNotValid, isTrue);
       });
 
-      test('is valid when containing a dirty/valid valud', () {
+      test('is valid when containing a dirty/valid value', () {
         final form = NameInputFormzMixin(
           name: const NameInput.dirty(value: 'joe'),
         );

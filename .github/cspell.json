@@ -19,6 +19,18 @@
   ],
   "useGitignore": true,
   "words": [
-
+    "xcworkspace",
+    "xcassets",
+    "xcconfig",
+    "xcplayground",
+    "xcshareddata",
+    "xcscheme",
+    "xctest",
+    "xctool",
+    "xctrunner",
+    "xctemplate",
+    "xcodeproj",
+    "xcodeb",
+    "unfocus"
   ]
 }
