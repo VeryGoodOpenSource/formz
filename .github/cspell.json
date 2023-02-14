@@ -31,6 +31,7 @@
     "xctemplate",
     "xcodeproj",
     "xcodeb",
-    "unfocus"
+    "unfocus",
+    "nullsafety"
   ]
 }
