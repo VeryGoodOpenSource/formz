@@ -13,7 +13,16 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
 
   build:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1.11.0
+
+  spell-check:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.11.0
+    with:
+      includes: |
+        **/*.{dart,md,yaml}
+        !.dart_tool/**/*.{dart,yaml}
+        .*/**/*.yml
+      modified_files_only: false
 
   pana:
     runs-on: ubuntu-latest

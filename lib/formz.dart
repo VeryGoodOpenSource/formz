@@ -1,5 +1,3 @@
-library formz;
-
 import 'package:meta/meta.dart';
 
 /// Enum representing the submission status of a form.
