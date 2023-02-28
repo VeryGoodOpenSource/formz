@@ -97,6 +97,35 @@ void main() {
 }
 ```
 
+
+## Caching validation results
+
+For cases where the validator method has an expensive  implemmentation, one could cache the validation result on a `late final` field. 
+
+```dart
+import 'package:formz/formz.dart';
+
+enum EmailValidationError { invalid }
+
+class Email extends FormzInput<String, EmailValidationError> {
+  Email.pure([super.value = '']) : super.pure();
+
+  Email.dirty([super.value = '']) : super.dirty();
+
+  static final _emailRegExp = RegExp(
+    r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
+  );
+
+  late final validationResultCache =
+  _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
+
+  @override
+  EmailValidationError? validator(String value) {
+    return validationResultCache;
+  }
+}
+```
+
 [ci_badge]: https://github.com/VeryGoodOpenSource/formz/actions/workflows/main.yaml/badge.svg
 [ci_link]: https://github.com/VeryGoodOpenSource/formz/actions
 [coverage_badge]: https://raw.githubusercontent.com/VeryGoodOpenSource/formz/main/coverage_badge.svg
