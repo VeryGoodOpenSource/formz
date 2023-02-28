@@ -1,3 +1,11 @@
+# 0.5.0
+
+- docs: add caching example
+- refactor: update very good analysis, workflows, flutter/dart version
+- feat: update very good analysis
+- feat: add dependabot
+- **BREAKING**: this release promotes 0.5.0-dev.1 which brings breaking changes
+
 # 0.5.0-dev.1
 
 - docs: use nullable validator in `README`
