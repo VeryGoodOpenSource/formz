@@ -100,28 +100,26 @@ void main() {
 
 ## Caching validation results
 
-For cases where the validator method has an expensive implementation, one could cache the validation result on a `late final` field. 
+For cases where the validator method has an expensive implementation, consider using the `FormzInputErrorCacheMixin` mixin to cache the `error` result and improve performance.
 
 ```dart
 import 'package:formz/formz.dart';
 
 enum EmailValidationError { invalid }
 
-class Email extends FormzInput<String, EmailValidationError> {
+class Email extends FormzInput<String, EmailValidationError>
+    with FormzInputErrorCacheMixin {
   Email.pure([super.value = '']) : super.pure();
 
   Email.dirty([super.value = '']) : super.dirty();
 
   static final _emailRegExp = RegExp(
-    r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
+    r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$',
   );
-
-  late final validationResultCache =
-  _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
 
   @override
   EmailValidationError? validator(String value) {
-    return validationResultCache;
+    return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
   }
 }
 ```
