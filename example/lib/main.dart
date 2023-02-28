@@ -163,10 +163,10 @@ class _MyFormState extends State<MyForm> {
 
 class MyFormState with FormzMixin {
   MyFormState({
-    this.email = const Email.pure(),
+    Email? email,
     this.password = const Password.pure(),
     this.status = FormzSubmissionStatus.initial,
-  });
+  }) : email = email ?? Email.pure();
 
   final Email email;
   final Password password;
@@ -191,16 +191,20 @@ class MyFormState with FormzMixin {
 enum EmailValidationError { invalid }
 
 class Email extends FormzInput<String, EmailValidationError> {
-  const Email.pure([super.value = '']) : super.pure();
-  const Email.dirty([super.value = '']) : super.dirty();
+  Email.pure([super.value = '']) : super.pure();
+
+  Email.dirty([super.value = '']) : super.dirty();
 
   static final _emailRegExp = RegExp(
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
   );
 
+  late final validationResultCache =
+      _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
+
   @override
   EmailValidationError? validator(String value) {
-    return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
+    return validationResultCache;
   }
 }
 
@@ -208,6 +212,7 @@ enum PasswordValidationError { invalid }
 
 class Password extends FormzInput<String, PasswordValidationError> {
   const Password.pure([super.value = '']) : super.pure();
+
   const Password.dirty([super.value = '']) : super.dirty();
 
   static final _passwordRegex =
