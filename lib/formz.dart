@@ -57,13 +57,13 @@ extension FormzSubmissionStatusX on FormzSubmissionStatus {
 /// {@endtemplate}
 @immutable
 abstract class FormzInput<T, E> {
-  const FormzInput._({required this.value, this.isPure = true});
+  FormzInput._({required this.value, this.isPure = true});
 
   /// Constructor which create a `pure` [FormzInput] with a given value.
-  const FormzInput.pure(T value) : this._(value: value);
+  FormzInput.pure(T value) : this._(value: value);
 
   /// Constructor which create a `dirty` [FormzInput] with a given value.
-  const FormzInput.dirty(T value) : this._(value: value, isPure: false);
+  FormzInput.dirty(T value) : this._(value: value, isPure: false);
 
   /// The value of the given [FormzInput].
   /// For example, if you have a `FormzInput` for `FirstName`,
@@ -85,7 +85,7 @@ abstract class FormzInput<T, E> {
   ///
   /// Returns `true` if `validator` returns `null` for the
   /// current [FormzInput] value and `false` otherwise.
-  bool get isValid => validator(value) == null;
+  bool get isValid => _validatorResultCache == null;
 
   /// Whether the [FormzInput] value is not valid.
   /// A value is invalid when the overridden `validator`
@@ -94,14 +94,20 @@ abstract class FormzInput<T, E> {
 
   /// Returns a validation error if the [FormzInput] is invalid.
   /// Returns `null` if the [FormzInput] is valid.
-  E? get error => validator(value);
+  E? get error => _validatorResultCache;
 
   /// The error to display if the [FormzInput] value
   /// is not valid and has been modified.
   E? get displayError => isPure ? null : error;
 
+  /// The result of [validator] cached to the current [value].
+  late final _validatorResultCache = validator(value);
+
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
+  ///
+  /// As a pure function, it should always return the same
+  /// result given a [value].
   E? validator(T value);
 
   @override

@@ -14,14 +14,14 @@ void main() {
       });
 
       test('is not valid when containing a dirty/invalid value', () {
-        final form = NameInputFormzMixin(name: const NameInput.dirty());
+        final form = NameInputFormzMixin(name: NameInput.dirty());
         expect(form.isValid, isFalse);
         expect(form.isNotValid, isTrue);
       });
 
       test('is valid when containing a dirty/valid value', () {
         final form = NameInputFormzMixin(
-          name: const NameInput.dirty(value: 'joe'),
+          name: NameInput.dirty(value: 'joe'),
         );
         expect(form.isValid, isTrue);
         expect(form.isNotValid, isFalse);
@@ -134,6 +134,28 @@ void main() {
           NameInput.pure(value: 'joe'),
           isNot(equals(NameInput.dirty(value: 'joe'))),
         );
+      });
+
+      test('Caches validator result for an instance', () {
+        final inputValid = RegexInput.dirty(
+          value:
+              '2014-08-26 app[web.1]: 50.0.134.125 - - [26/Aug/2023 00:27:41] "GET / HTTP/1.1" 200 14 0.0005',
+        );
+        expect(inputValid.validationCalls, 0);
+        expect(inputValid.isValid, true);
+        expect(inputValid.displayError, null);
+        expect(inputValid.error, null);
+        expect(inputValid.validationCalls, 1);
+
+        final inputInvalid = RegexInput.dirty(
+          value:
+              '50.0.134.125 - - [26/Aug/2023 00:27:41] "GET / HTTP/1.1" 200 14 0.0005',
+        );
+        expect(inputInvalid.validationCalls, 0);
+        expect(inputInvalid.isValid, false);
+        expect(inputInvalid.displayError, RegexInputError.error);
+        expect(inputInvalid.error, RegexInputError.error);
+        expect(inputInvalid.validationCalls, 1);
       });
 
       test('toString is overridden correctly', () {
