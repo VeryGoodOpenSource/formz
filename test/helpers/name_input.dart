@@ -20,3 +20,18 @@ class NameInputFormzMixin with FormzMixin {
   @override
   List<FormzInput<dynamic, dynamic>> get inputs => [name];
 }
+
+// ignore: must_be_immutable
+class NameInputErrorCacheMixin extends FormzInput<String, NameInputError>
+    with FormzInputErrorCacheMixin {
+  NameInputErrorCacheMixin.pure({String value = ''}) : super.pure(value);
+  NameInputErrorCacheMixin.dirty({String value = ''}) : super.dirty(value);
+
+  int validatorCalls = 0;
+
+  @override
+  NameInputError? validator(String value) {
+    validatorCalls++;
+    return value.isEmpty ? NameInputError.empty : null;
+  }
+}

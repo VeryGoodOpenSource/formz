@@ -28,6 +28,26 @@ void main() {
       });
     });
 
+    group('FormzInputErrorCacheMixin', () {
+      test('will call validator at most once', () {
+        final formValid = NameInputErrorCacheMixin.dirty(value: 'test');
+        expect(formValid.validatorCalls, 0);
+        expect(formValid.error, null);
+        expect(formValid.validatorCalls, 1);
+        expect(formValid.error, null);
+        expect(formValid.isValid, true);
+        expect(formValid.validatorCalls, 1);
+
+        final formInvalid = NameInputErrorCacheMixin.pure();
+        expect(formInvalid.validatorCalls, 0);
+        expect(formInvalid.error, NameInputError.empty);
+        expect(formInvalid.validatorCalls, 1);
+        expect(formInvalid.error, NameInputError.empty);
+        expect(formInvalid.isValid, false);
+        expect(formInvalid.validatorCalls, 1);
+      });
+    });
+
     group('FormzInput', () {
       test('value is correct', () {
         expect(NameInput.pure(value: 'joe').value, 'joe');
