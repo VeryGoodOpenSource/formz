@@ -100,7 +100,7 @@ void main() {
 
 ## Caching validation results
 
-For cases where the validator method has an expensive  implemmentation, one could cache the validation result on a `late final` field. 
+For cases where the validator method has an expensive implementation, one could cache the validation result on a `late final` field. 
 
 ```dart
 import 'package:formz/formz.dart';
