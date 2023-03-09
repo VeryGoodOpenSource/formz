@@ -123,6 +123,19 @@ abstract class FormzInput<T, E> {
   }
 }
 
+/// Mixin for [FormzInput] that caches the [error] result of the [validator].
+/// Use this mixin when implementations that make expensive computations are
+/// used, such as those involving regular expressions.
+mixin FormzInputErrorCacheMixin<T, E> on FormzInput<T, E> {
+  late final E? _error = validator(value);
+
+  @override
+  E? get error => _error;
+
+  @override
+  bool get isValid => _error == null;
+}
+
 /// Class which contains methods that help manipulate and manage
 /// validity of [FormzInput] instances.
 class Formz {

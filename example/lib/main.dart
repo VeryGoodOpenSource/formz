@@ -190,21 +190,19 @@ class MyFormState with FormzMixin {
 
 enum EmailValidationError { invalid }
 
-class Email extends FormzInput<String, EmailValidationError> {
+class Email extends FormzInput<String, EmailValidationError>
+    with FormzInputErrorCacheMixin {
   Email.pure([super.value = '']) : super.pure();
 
   Email.dirty([super.value = '']) : super.dirty();
 
   static final _emailRegExp = RegExp(
-    r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
+    r'^[a-zA-Z\d.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*$',
   );
-
-  late final validationResultCache =
-      _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
 
   @override
   EmailValidationError? validator(String value) {
-    return validationResultCache;
+    return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
   }
 }
 
