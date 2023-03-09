@@ -34,6 +34,13 @@ extension FormzSubmissionStatusX on FormzSubmissionStatus {
 
   /// Indicates whether the form submission has been canceled.
   bool get isCanceled => this == FormzSubmissionStatus.canceled;
+
+  /// Indicates whether the form is either in progress or has been submitted
+  /// successfully.
+  ///
+  /// This is useful for showing a loading indicator or disabling the submit
+  /// button to prevent duplicate submissions.
+  bool get isInProgressOrSuccess => isInProgress || isSuccess;
 }
 
 /// {@template form_input}

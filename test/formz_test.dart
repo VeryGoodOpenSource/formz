@@ -253,6 +253,11 @@ void main() {
       test('isCanceled returns true', () {
         expect(FormzSubmissionStatus.canceled.isCanceled, isTrue);
       });
+
+      test('isInProgress returns true', () {
+        expect(FormzSubmissionStatus.inProgress.isInProgressOrSuccess, isTrue);
+        expect(FormzSubmissionStatus.success.isInProgressOrSuccess, isTrue);
+      });
     });
   });
 }
