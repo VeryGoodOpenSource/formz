@@ -254,7 +254,7 @@ void main() {
         expect(FormzSubmissionStatus.canceled.isCanceled, isTrue);
       });
 
-      test('isInProgress returns true', () {
+      test('isInProgressOrSuccess returns true', () {
         expect(FormzSubmissionStatus.inProgress.isInProgressOrSuccess, isTrue);
         expect(FormzSubmissionStatus.success.isInProgressOrSuccess, isTrue);
       });
