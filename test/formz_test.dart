@@ -26,6 +26,18 @@ void main() {
         expect(form.isValid, isTrue);
         expect(form.isNotValid, isFalse);
       });
+
+      test('is pure when none of the inputs were touched', () {
+        final form = NameInputFormzMixin();
+        expect(form.isPure, isTrue);
+        expect(form.isDirty, isFalse);
+      });
+
+      test('is dirty when one or multiple inputs were touched', () {
+        final form = NameInputFormzMixin(name: const NameInput.dirty());
+        expect(form.isDirty, isTrue);
+        expect(form.isPure, isFalse);
+      });
     });
 
     group('FormzInputErrorCacheMixin', () {
