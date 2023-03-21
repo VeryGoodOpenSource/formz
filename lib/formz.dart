@@ -151,6 +151,12 @@ class Formz {
   static bool validate(List<FormzInput<dynamic, dynamic>> inputs) {
     return inputs.every((input) => input.isValid);
   }
+
+  /// Returns a [bool] given a list of [FormzInput] indicating whether
+  /// all the inputs are pure.
+  static bool isPure(List<FormzInput<dynamic, dynamic>> inputs) {
+    return inputs.every((input) => input.isPure);
+  }
 }
 
 /// Mixin that automatically handles validation of all [FormzInput]s present in
@@ -179,6 +185,12 @@ mixin FormzMixin {
 
   /// Whether the [FormzInput] values are not all valid.
   bool get isNotValid => !isValid;
+
+  /// Whether all of the [FormzInput] are pure.
+  bool get isPure => Formz.isPure(inputs);
+
+  /// Whether all of the [FormzInput] are dirty.
+  bool get isDirty => !isPure;
 
   /// Returns all [FormzInput] instances.
   ///
