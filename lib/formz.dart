@@ -186,7 +186,7 @@ mixin FormzMixin {
   /// Whether the [FormzInput] values are not all valid.
   bool get isNotValid => !isValid;
 
-  ///Whether all of the [FormzInput] are pure
+  /// Whether all of the [FormzInput] are pure.
   bool get isPure => Formz.isPure(inputs);
 
   ///Whether all of the [FormzInput] are pure
