@@ -189,7 +189,7 @@ mixin FormzMixin {
   /// Whether all of the [FormzInput] are pure.
   bool get isPure => Formz.isPure(inputs);
 
-  ///Whether all of the [FormzInput] are pure
+  /// Whether all of the [FormzInput] are dirty.
   bool get isDirty => !isPure;
 
   /// Returns all [FormzInput] instances.
