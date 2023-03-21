@@ -153,7 +153,7 @@ class Formz {
   }
 
   /// Returns a [bool] given a list of [FormzInput] indicating whether
-  /// all the inputs are pure
+  /// all the inputs are pure.
   static bool isPure(List<FormzInput<dynamic, dynamic>> inputs) {
     return inputs.every((input) => input.isPure);
   }
