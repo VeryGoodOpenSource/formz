@@ -1,3 +1,9 @@
+# 0.6.0
+
+- feat: add FormzInputErrorCacheMixin mixin
+- feat: add isInProgressOrSuccess to FormzSubmissionStatusX
+- feat: add purity check to FormzMixin
+
 # 0.5.0
 
 - docs: add caching example
