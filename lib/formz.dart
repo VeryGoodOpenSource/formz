@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:meta/meta.dart';
 
 /// Enum representing the submission status of a form.
@@ -92,24 +94,24 @@ abstract class FormzInput<T, E> {
   ///
   /// Returns `true` if `validator` returns `null` for the
   /// current [FormzInput] value and `false` otherwise.
-  bool get isValid => validator(value) == null;
+  FutureOr<bool> get isValid async => await validator(value) == null;
 
   /// Whether the [FormzInput] value is not valid.
   /// A value is invalid when the overridden `validator`
   /// returns an error (non-null value).
-  bool get isNotValid => !isValid;
+  FutureOr<bool> get isNotValid async => !(await isValid);
 
   /// Returns a validation error if the [FormzInput] is invalid.
   /// Returns `null` if the [FormzInput] is valid.
-  E? get error => validator(value);
+  FutureOr<E?> get error async => await validator(value);
 
   /// The error to display if the [FormzInput] value
   /// is not valid and has been modified.
-  E? get displayError => isPure ? null : error;
+  FutureOr<E?> get displayError => isPure ? null : error;
 
   /// A function that must return a validation error if the provided
   /// [value] is invalid and `null` otherwise.
-  E? validator(T value);
+  FutureOr<E?> validator(T value);
 
   @override
   int get hashCode => Object.hashAll([value, isPure]);
@@ -134,10 +136,10 @@ abstract class FormzInput<T, E> {
 /// Use this mixin when implementations that make expensive computations are
 /// used, such as those involving regular expressions.
 mixin FormzInputErrorCacheMixin<T, E> on FormzInput<T, E> {
-  late final E? _error = validator(value);
+  late final FutureOr<E?> _error = validator(value);
 
   @override
-  E? get error => _error;
+  FutureOr<E?> get error => _error;
 
   @override
   bool get isValid => _error == null;
@@ -148,8 +150,15 @@ mixin FormzInputErrorCacheMixin<T, E> on FormzInput<T, E> {
 class Formz {
   /// Returns a [bool] given a list of [FormzInput] indicating whether
   /// the inputs are all valid.
-  static bool validate(List<FormzInput<dynamic, dynamic>> inputs) {
-    return inputs.every((input) => input.isValid);
+  static FutureOr<bool> validate(
+      List<FormzInput<dynamic, dynamic>> inputs) async {
+    var allValid = true;
+    for (final input in inputs) {
+      if (await input.isNotValid) {
+        allValid = false;
+      }
+    }
+    return allValid;
   }
 
   /// Returns a [bool] given a list of [FormzInput] indicating whether
@@ -181,10 +190,10 @@ class Formz {
 /// ```
 mixin FormzMixin {
   /// Whether the [FormzInput] values are all valid.
-  bool get isValid => Formz.validate(inputs);
+  FutureOr<bool> get isValid async => await Formz.validate(inputs);
 
   /// Whether the [FormzInput] values are not all valid.
-  bool get isNotValid => !isValid;
+  FutureOr<bool> get isNotValid async => !(await isValid);
 
   /// Whether all of the [FormzInput] are pure.
   bool get isPure => Formz.isPure(inputs);

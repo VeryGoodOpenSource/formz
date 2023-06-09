@@ -7,24 +7,24 @@ import 'helpers/helpers.dart';
 void main() {
   group('Formz', () {
     group('FormzMixin', () {
-      test('is not valid when default constructor is used', () {
+      test('is not valid when default constructor is used', () async {
         final form = NameInputFormzMixin();
-        expect(form.isValid, isFalse);
-        expect(form.isNotValid, isTrue);
+        expect(await form.isValid, isFalse);
+        expect(await form.isNotValid, isTrue);
       });
 
-      test('is not valid when containing a dirty/invalid value', () {
+      test('is not valid when containing a dirty/invalid value', () async {
         final form = NameInputFormzMixin(name: const NameInput.dirty());
-        expect(form.isValid, isFalse);
-        expect(form.isNotValid, isTrue);
+        expect(await form.isValid, isFalse);
+        expect(await form.isNotValid, isTrue);
       });
 
-      test('is valid when containing a dirty/valid value', () {
+      test('is valid when containing a dirty/valid value', () async {
         final form = NameInputFormzMixin(
           name: const NameInput.dirty(value: 'joe'),
         );
-        expect(form.isValid, isTrue);
-        expect(form.isNotValid, isFalse);
+        expect(await form.isValid, isTrue);
+        expect(await form.isNotValid, isFalse);
       });
 
       test('is pure when none of the inputs were touched', () {
@@ -73,72 +73,79 @@ void main() {
         expect(NameInput.dirty(value: 'joe').isPure, isFalse);
       });
 
-      test('isValid is true if super.pure is used and value is valid', () {
-        final isValid = NameInput.pure(value: 'joe').isValid;
+      test('isValid is true if super.pure is used and value is valid',
+          () async {
+        final isValid = await NameInput.pure(value: 'joe').isValid;
         expect(isValid, isTrue);
       });
 
-      test('isValid is true if super.dirty is used and input is valid', () {
-        final isValid = NameInput.dirty(value: 'joe').isValid;
+      test('isValid is true if super.dirty is used and input is valid',
+          () async {
+        final isValid = await NameInput.dirty(value: 'joe').isValid;
         expect(isValid, isTrue);
       });
 
-      test('isValid is false if super.dirty is used and input is invalid', () {
-        final isValid = NameInput.dirty().isValid;
+      test('isValid is false if super.dirty is used and input is invalid',
+          () async {
+        final isValid = await NameInput.dirty().isValid;
         expect(isValid, isFalse);
       });
 
-      test('error is NameInputError.empty if pure is used', () {
-        expect(NameInput.pure().error, NameInputError.empty);
+      test('error is NameInputError.empty if pure is used', () async {
+        expect(await NameInput.pure().error, NameInputError.empty);
       });
 
-      test('error is null if super.dirty is used and input is valid', () {
-        expect(NameInput.dirty(value: 'joe').error, isNull);
+      test('error is null if super.dirty is used and input is valid', () async {
+        expect(await NameInput.dirty(value: 'joe').error, isNull);
       });
 
       test(
           'error is NameInputError.empty '
-          'if super.dirty is used and input is invalid', () {
-        expect(NameInput.dirty().error, NameInputError.empty);
+          'if super.dirty is used and input is invalid', () async {
+        expect(await NameInput.dirty().error, NameInputError.empty);
       });
 
       test('displayError is null if input is pure', () {
         expect(NameInput.pure().displayError, isNull);
       });
 
-      test('displayError is null if error is null', () {
-        expect(NameInput.dirty(value: 'joe').displayError, isNull);
+      test('displayError is null if error is null', () async {
+        expect(await NameInput.dirty(value: 'joe').displayError, isNull);
       });
 
-      test('displayError is defined if error is not null', () {
-        expect(NameInput.dirty().displayError, NameInputError.empty);
+      test('displayError is defined if error is not null', () async {
+        expect(await NameInput.dirty().displayError, NameInputError.empty);
       });
 
-      test('isValid is true if super.pure is used and input is valid', () {
-        expect(NameInput.pure(value: 'joe').isValid, isTrue);
-        expect(NameInput.pure(value: 'joe').isNotValid, isFalse);
+      test('isValid is true if super.pure is used and input is valid',
+          () async {
+        expect(await NameInput.pure(value: 'joe').isValid, isTrue);
+        expect(await NameInput.pure(value: 'joe').isNotValid, isFalse);
       });
 
-      test('isValid is true if super.dirty is used and input is valid', () {
-        expect(NameInput.dirty(value: 'joe').isValid, isTrue);
-        expect(NameInput.dirty(value: 'joe').isNotValid, isFalse);
+      test('isValid is true if super.dirty is used and input is valid',
+          () async {
+        expect(await NameInput.dirty(value: 'joe').isValid, isTrue);
+        expect(await NameInput.dirty(value: 'joe').isNotValid, isFalse);
       });
 
-      test('isValid is false if super.pure is used and input is invalid', () {
-        expect(NameInput.pure().isValid, isFalse);
-        expect(NameInput.pure().isNotValid, isTrue);
+      test('isValid is false if super.pure is used and input is invalid',
+          () async {
+        expect(await NameInput.pure().isValid, isFalse);
+        expect(await NameInput.pure().isNotValid, isTrue);
       });
 
-      test('isValid is false if super.dirty is used and input is invalid', () {
-        expect(NameInput.dirty().isValid, isFalse);
-        expect(NameInput.dirty().isNotValid, isTrue);
+      test('isValid is false if super.dirty is used and input is invalid',
+          () async {
+        expect(await NameInput.dirty().isValid, isFalse);
+        expect(await NameInput.dirty().isNotValid, isTrue);
       });
 
       test(
           'isNotValid is true if super.dirty is used '
-          'and input is invalid', () {
-        expect(NameInput.dirty().isValid, isFalse);
-        expect(NameInput.dirty().isNotValid, isTrue);
+          'and input is invalid', () async {
+        expect(await NameInput.dirty().isValid, isFalse);
+        expect(await NameInput.dirty().isNotValid, isTrue);
       });
 
       test('hashCode is correct', () {
@@ -168,44 +175,44 @@ void main() {
         );
       });
 
-      test('toString is overridden correctly', () {
+      test('toString is overridden correctly', () async {
         expect(
           NameInput.pure().toString(),
           equals(
-            '''FormzInput<String, NameInputError>.pure(value: , isValid: false, error: NameInputError.empty)''',
+            '''FormzInput<String, NameInputError>.pure(value: , isValid: Instance of \'Future<bool>\', error: Instance of \'Future<NameInputError?>\')''',
           ),
         );
         expect(
           NameInput.pure(value: 'joe').toString(),
           equals(
-            '''FormzInput<String, NameInputError>.pure(value: joe, isValid: true, error: null)''',
+            '''FormzInput<String, NameInputError>.pure(value: joe, isValid: Instance of \'Future<bool>\', error: Instance of \'Future<NameInputError?>\')''',
           ),
         );
         expect(
           NameInput.dirty(value: 'joe').toString(),
           equals(
-            '''FormzInput<String, NameInputError>.dirty(value: joe, isValid: true, error: null)''',
+            '''FormzInput<String, NameInputError>.dirty(value: joe, isValid: Instance of \'Future<bool>\', error: Instance of \'Future<NameInputError?>\')''',
           ),
         );
       });
     });
 
     group('validate', () {
-      test('returns valid for empty inputs', () {
-        expect(Formz.validate([]), isTrue);
+      test('returns valid for empty inputs', () async {
+        expect(await Formz.validate([]), isTrue);
       });
 
-      test('returns valid for a pure/valid input', () {
-        expect(Formz.validate([NameInput.pure(value: 'joe')]), isTrue);
+      test('returns valid for a pure/valid input', () async {
+        expect(await Formz.validate([NameInput.pure(value: 'joe')]), isTrue);
       });
 
-      test('returns valid for a dirty/valid input', () {
-        expect(Formz.validate([NameInput.dirty(value: 'joe')]), isTrue);
+      test('returns valid for a dirty/valid input', () async {
+        expect(await Formz.validate([NameInput.dirty(value: 'joe')]), isTrue);
       });
 
-      test('returns valid for multiple valid inputs', () {
+      test('returns valid for multiple valid inputs', () async {
         expect(
-          Formz.validate([
+          await Formz.validate([
             NameInput.dirty(value: 'jen'),
             NameInput.dirty(value: 'bob'),
             NameInput.dirty(value: 'alex'),
@@ -214,17 +221,17 @@ void main() {
         );
       });
 
-      test('returns invalid for a pure/invalid input', () {
-        expect(Formz.validate([NameInput.pure()]), isFalse);
+      test('returns invalid for a pure/invalid input', () async {
+        expect(await Formz.validate([NameInput.pure()]), isFalse);
       });
 
-      test('returns invalid for a dirty/invalid input', () {
-        expect(Formz.validate([NameInput.dirty()]), isFalse);
+      test('returns invalid for a dirty/invalid input', () async {
+        expect(await Formz.validate([NameInput.dirty()]), isFalse);
       });
 
-      test('returns invalid for multiple invalid inputs', () {
+      test('returns invalid for multiple invalid inputs', () async {
         expect(
-          Formz.validate([
+          await Formz.validate([
             NameInput.dirty(),
             NameInput.dirty(),
             NameInput.dirty(),
@@ -233,9 +240,9 @@ void main() {
         );
       });
 
-      test('returns invalid when at least one input is invalid', () {
+      test('returns invalid when at least one input is invalid', () async {
         expect(
-          Formz.validate([
+          await Formz.validate([
             NameInput.dirty(value: 'jan'),
             NameInput.dirty(value: 'jim'),
             NameInput.dirty(),

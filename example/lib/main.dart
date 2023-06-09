@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -129,7 +130,9 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Email',
               helperText: 'A valid email e.g. joe.doe@gmail.com',
             ),
-            validator: (_) => _state.email.displayError?.text(),
+            validator: (_) {
+              return _state.email.displayError?.text();
+            },
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
           ),
@@ -143,7 +146,9 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Password',
               errorMaxLines: 2,
             ),
-            validator: (_) => _state.password.displayError?.text(),
+            validator: (_) {
+              return _state.password.displayError?.text();
+            },
             obscureText: true,
             textInputAction: TextInputAction.done,
           ),
@@ -224,20 +229,23 @@ class Password extends FormzInput<String, PasswordValidationError> {
   }
 }
 
-extension on EmailValidationError {
-  String text() {
+extension on FutureOr<EmailValidationError?> {
+  String? text() {
     switch (this) {
       case EmailValidationError.invalid:
         return 'Please ensure the email entered is valid';
     }
+
+    return null;
   }
 }
 
-extension on PasswordValidationError {
-  String text() {
+extension on FutureOr<PasswordValidationError?> {
+  String? text() {
     switch (this) {
       case PasswordValidationError.invalid:
         return '''Password must be at least 8 characters and contain at least one letter and number''';
     }
+    return null;
   }
 }
