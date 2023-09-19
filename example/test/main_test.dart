@@ -51,7 +51,7 @@ void main() {
 
         await tester.enterText(
           find.byKey(const Key('myForm_emailInput')),
-          'emailexample.com',
+          'example.com',
         );
         await tester.pumpAndSettle();
 
