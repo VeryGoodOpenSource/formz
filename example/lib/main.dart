@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Formz Example')),
-        body: const Padding(
-          padding: EdgeInsets.all(24),
+        body: Padding(
+          padding: const EdgeInsets.all(24),
           child: SingleChildScrollView(child: MyForm()),
         ),
       ),
@@ -23,7 +23,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyForm extends StatefulWidget {
-  const MyForm({super.key});
+  MyForm({super.key, Random? seed}) : seed = seed ?? Random();
+
+  final Random seed;
 
   @override
   State<MyForm> createState() => _MyFormState();
@@ -89,7 +91,7 @@ class _MyFormState extends State<MyForm> {
 
   Future<void> _submitForm() async {
     await Future<void>.delayed(const Duration(seconds: 1));
-    if (Random().nextInt(2) == 0) throw Exception();
+    if (widget.seed.nextInt(2) == 0) throw Exception();
   }
 
   void _resetForm() {
@@ -123,6 +125,7 @@ class _MyFormState extends State<MyForm> {
       child: Column(
         children: [
           TextFormField(
+            key: const Key('myForm_emailInput'),
             controller: _emailController,
             decoration: const InputDecoration(
               icon: Icon(Icons.email),
@@ -134,6 +137,7 @@ class _MyFormState extends State<MyForm> {
             textInputAction: TextInputAction.next,
           ),
           TextFormField(
+            key: const Key('myForm_passwordInput'),
             controller: _passwordController,
             decoration: const InputDecoration(
               icon: Icon(Icons.lock),
@@ -153,6 +157,7 @@ class _MyFormState extends State<MyForm> {
             const CircularProgressIndicator()
           else
             ElevatedButton(
+              key: const Key('myForm_submit'),
               onPressed: _onSubmit,
               child: const Text('Submit'),
             ),
