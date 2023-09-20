@@ -1,4 +1,10 @@
-# 0.6.0
+# 0.6.1
+
+- fix(example): update validation to throw on empty values ([#100](https://github.com/VeryGoodOpenSource/formz/pull/100))
+- chore: update very good analysis to 5.1.0 ([#104](https://github.com/VeryGoodOpenSource/formz/pull/104))
+- fix(docs): wrong docs ([#106](https://github.com/VeryGoodOpenSource/formz/pull/106))
+
+- # 0.6.0
 
 - feat: add FormzInputErrorCacheMixin mixin
 - feat: add isInProgressOrSuccess to FormzSubmissionStatusX
