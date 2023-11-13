@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(title: const Text('Formz Example')),
-        body: const Padding(
-          padding: EdgeInsets.all(24),
+        body: Padding(
+          padding: const EdgeInsets.all(24),
           child: SingleChildScrollView(child: MyForm()),
         ),
       ),
@@ -24,7 +24,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyForm extends StatefulWidget {
-  const MyForm({super.key});
+  MyForm({super.key, Random? seed}) : seed = seed ?? Random();
+
+  final Random seed;
 
   @override
   State<MyForm> createState() => _MyFormState();
@@ -90,7 +92,7 @@ class _MyFormState extends State<MyForm> {
 
   Future<void> _submitForm() async {
     await Future<void>.delayed(const Duration(seconds: 1));
-    if (Random().nextInt(2) == 0) throw Exception();
+    if (widget.seed.nextInt(2) == 0) throw Exception();
   }
 
   void _resetForm() {
@@ -124,19 +126,19 @@ class _MyFormState extends State<MyForm> {
       child: Column(
         children: [
           TextFormField(
+            key: const Key('myForm_emailInput'),
             controller: _emailController,
             decoration: const InputDecoration(
               icon: Icon(Icons.email),
               labelText: 'Email',
               helperText: 'A valid email e.g. joe.doe@gmail.com',
             ),
-            validator: (_) {
-              return _state.email.displayError?.text();
-            },
+            validator: (value) => _state.email.validator(value ?? '')?.text(),
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
           ),
           TextFormField(
+            key: const Key('myForm_passwordInput'),
             controller: _passwordController,
             decoration: const InputDecoration(
               icon: Icon(Icons.lock),
@@ -146,9 +148,8 @@ class _MyFormState extends State<MyForm> {
               labelText: 'Password',
               errorMaxLines: 2,
             ),
-            validator: (_) {
-              return _state.password.displayError?.text();
-            },
+            validator: (value) =>
+                _state.password.validator(value ?? '')?.text(),
             obscureText: true,
             textInputAction: TextInputAction.done,
           ),
@@ -157,6 +158,7 @@ class _MyFormState extends State<MyForm> {
             const CircularProgressIndicator()
           else
             ElevatedButton(
+              key: const Key('myForm_submit'),
               onPressed: _onSubmit,
               child: const Text('Submit'),
             ),
@@ -193,7 +195,7 @@ class MyFormState with FormzMixin {
   List<FormzInput<dynamic, dynamic>> get inputs => [email, password];
 }
 
-enum EmailValidationError { invalid }
+enum EmailValidationError { invalid, empty }
 
 class Email extends FormzInput<String, EmailValidationError>
     with FormzInputErrorCacheMixin {
@@ -207,11 +209,17 @@ class Email extends FormzInput<String, EmailValidationError>
 
   @override
   EmailValidationError? validator(String value) {
-    return _emailRegExp.hasMatch(value) ? null : EmailValidationError.invalid;
+    if (value.isEmpty) {
+      return EmailValidationError.empty;
+    } else if (!_emailRegExp.hasMatch(value)) {
+      return EmailValidationError.invalid;
+    }
+
+    return null;
   }
 }
 
-enum PasswordValidationError { invalid }
+enum PasswordValidationError { invalid, empty }
 
 class Password extends FormzInput<String, PasswordValidationError> {
   const Password.pure([super.value = '']) : super.pure();
@@ -223,9 +231,13 @@ class Password extends FormzInput<String, PasswordValidationError> {
 
   @override
   PasswordValidationError? validator(String value) {
-    return _passwordRegex.hasMatch(value)
-        ? null
-        : PasswordValidationError.invalid;
+    if (value.isEmpty) {
+      return PasswordValidationError.empty;
+    } else if (!_passwordRegex.hasMatch(value)) {
+      return PasswordValidationError.invalid;
+    }
+
+    return null;
   }
 }
 
@@ -234,6 +246,8 @@ extension on FutureOr<EmailValidationError?> {
     switch (this) {
       case EmailValidationError.invalid:
         return 'Please ensure the email entered is valid';
+      case EmailValidationError.empty:
+        return 'Please enter an email';
     }
 
     return null;
@@ -245,6 +259,8 @@ extension on FutureOr<PasswordValidationError?> {
     switch (this) {
       case PasswordValidationError.invalid:
         return '''Password must be at least 8 characters and contain at least one letter and number''';
+      case PasswordValidationError.empty:
+        return 'Please enter a password';
     }
     return null;
   }
