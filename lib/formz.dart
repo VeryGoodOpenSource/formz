@@ -151,7 +151,8 @@ class Formz {
   /// Returns a [bool] given a list of [FormzInput] indicating whether
   /// the inputs are all valid.
   static FutureOr<bool> validate(
-      List<FormzInput<dynamic, dynamic>> inputs) async {
+    List<FormzInput<dynamic, dynamic>> inputs,
+  ) async {
     var allValid = true;
     for (final input in inputs) {
       if (await input.isNotValid) {

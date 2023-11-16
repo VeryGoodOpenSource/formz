@@ -179,19 +179,19 @@ void main() {
         expect(
           NameInput.pure().toString(),
           equals(
-            '''FormzInput<String, NameInputError>.pure(value: , isValid: Instance of \'Future<bool>\', error: Instance of \'Future<NameInputError?>\')''',
+            '''FormzInput<String, NameInputError>.pure(value: , isValid: Instance of 'Future<bool>', error: Instance of 'Future<NameInputError?>')''',
           ),
         );
         expect(
           NameInput.pure(value: 'joe').toString(),
           equals(
-            '''FormzInput<String, NameInputError>.pure(value: joe, isValid: Instance of \'Future<bool>\', error: Instance of \'Future<NameInputError?>\')''',
+            '''FormzInput<String, NameInputError>.pure(value: joe, isValid: Instance of 'Future<bool>', error: Instance of 'Future<NameInputError?>')''',
           ),
         );
         expect(
           NameInput.dirty(value: 'joe').toString(),
           equals(
-            '''FormzInput<String, NameInputError>.dirty(value: joe, isValid: Instance of \'Future<bool>\', error: Instance of \'Future<NameInputError?>\')''',
+            '''FormzInput<String, NameInputError>.dirty(value: joe, isValid: Instance of 'Future<bool>', error: Instance of 'Future<NameInputError?>')''',
           ),
         );
       });
