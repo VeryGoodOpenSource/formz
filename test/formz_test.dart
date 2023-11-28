@@ -289,6 +289,25 @@ void main() {
           completion(isFalse),
         );
       });
+
+      test('if one input is invalid should not call validate for the others',
+          () async {
+        final formValid = NameInputErrorCacheMixin.dirty(value: 'John');
+        final formInvalidA = NameInputErrorCacheMixin.dirty();
+        final formInvalidB = NameInputErrorCacheMixin.dirty();
+        await expectLater(
+          Formz.validate([
+            formValid,
+            formInvalidA,
+            formInvalidB,
+          ]),
+          completion(isFalse),
+        );
+
+        expect(formValid.validatorCalls, 1);
+        expect(formInvalidA.validatorCalls, 1);
+        expect(formInvalidB.validatorCalls, 0);
+      });
     });
 
     group('FormzSubmissionStatusX', () {
