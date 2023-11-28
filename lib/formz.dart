@@ -157,6 +157,7 @@ class Formz {
     for (final input in inputs) {
       if (await input.isNotValid) {
         allValid = false;
+        break;
       }
     }
     return allValid;
