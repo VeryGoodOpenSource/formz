@@ -241,7 +241,7 @@ class Password extends FormzInput<String, PasswordValidationError> {
   }
 }
 
-extension on FutureOr<EmailValidationError?> {
+extension on EmailValidationError {
   String? text() {
     switch (this) {
       case EmailValidationError.invalid:
@@ -249,12 +249,10 @@ extension on FutureOr<EmailValidationError?> {
       case EmailValidationError.empty:
         return 'Please enter an email';
     }
-
-    return null;
   }
 }
 
-extension on FutureOr<PasswordValidationError?> {
+extension on PasswordValidationError {
   String? text() {
     switch (this) {
       case PasswordValidationError.invalid:
@@ -262,6 +260,5 @@ extension on FutureOr<PasswordValidationError?> {
       case PasswordValidationError.empty:
         return 'Please enter a password';
     }
-    return null;
   }
 }
