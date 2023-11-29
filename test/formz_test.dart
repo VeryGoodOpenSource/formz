@@ -1,8 +1,26 @@
 // ignore_for_file: prefer_const_constructors
+import 'dart:async';
+
 import 'package:formz/formz.dart';
 import 'package:test/test.dart';
 
 import 'helpers/helpers.dart';
+
+/// Similar to [NameInput], but takes a [delay] before validating.
+class _DelayedNameInput extends FormzInput<String, NameInputError> {
+  const _DelayedNameInput.dirty({
+    required this.delay,
+    String value = '',
+  }) : super.dirty(value);
+
+  final Duration delay;
+
+  @override
+  FutureOr<NameInputError?> validator(String value) async {
+    await Future<void>.delayed(delay);
+    return value.isEmpty ? NameInputError.empty : null;
+  }
+}
 
 void main() {
   group('Formz', () {
@@ -243,7 +261,7 @@ void main() {
         );
       });
 
-      test('returns valid for multiple valid inputs', () async {
+      test('returns valid for multiple valid sync inputs', () async {
         await expectLater(
           Formz.validate([
             NameInput.dirty(value: 'jen'),
@@ -253,6 +271,29 @@ void main() {
           completion(isTrue),
         );
       });
+
+      test(
+        'returns valid for multiple valid async inputs',
+        () async {
+          await expectLater(
+            Formz.validate([
+              _DelayedNameInput.dirty(
+                delay: Duration(seconds: 2),
+                value: 'joe',
+              ),
+              _DelayedNameInput.dirty(
+                delay: Duration(seconds: 2),
+                value: 'bob',
+              ),
+              _DelayedNameInput.dirty(
+                delay: Duration(seconds: 2),
+                value: 'alex',
+              ),
+            ]),
+            completion(isTrue),
+          );
+        },
+      );
 
       test('returns invalid for a pure/invalid input', () async {
         await expectLater(
@@ -290,24 +331,19 @@ void main() {
         );
       });
 
-      test('if one input is invalid should not call validate for the others',
-          () async {
-        final formValid = NameInputErrorCacheMixin.dirty(value: 'John');
-        final formInvalidA = NameInputErrorCacheMixin.dirty();
-        final formInvalidB = NameInputErrorCacheMixin.dirty();
-        await expectLater(
-          Formz.validate([
-            formValid,
-            formInvalidA,
-            formInvalidB,
-          ]),
-          completion(isFalse),
-        );
-
-        expect(formValid.validatorCalls, 1);
-        expect(formInvalidA.validatorCalls, 1);
-        expect(formInvalidB.validatorCalls, 0);
-      });
+      test(
+        'returns invalid as soon as an input is invalid',
+        () async {
+          await expectLater(
+            Formz.validate([
+              _DelayedNameInput.dirty(delay: Duration(seconds: 1)),
+              _DelayedNameInput.dirty(delay: Duration(minutes: 5)),
+            ]),
+            completion(isFalse),
+          );
+        },
+        timeout: Timeout(Duration(seconds: 10)),
+      );
     });
 
     group('FormzSubmissionStatusX', () {
