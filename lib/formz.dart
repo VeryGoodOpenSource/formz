@@ -164,7 +164,8 @@ class Formz {
   /// otherwise.
   ///
   /// If some inputs validations are asynchronous, this method will return as
-  /// soon as one of the inputs is invalid.
+  /// soon as one of the inputs is invalid. Otherwise, it will wait for all
+  /// inputs to be validated before returning.
   static FutureOr<bool> validate(
     List<FormzInput<dynamic, dynamic>> inputs,
   ) async {
@@ -176,7 +177,7 @@ class Formz {
     final validators = inputs.map((input) => input.isValid);
     try {
       // We have to wrap the futures and ensure they throw an exception
-      // if they are not valid. This is because Future.wait will eagerError
+      // if they are not valid. This is because Future.wait `eagerError`
       // will only stop at the first exception it encounters.
       final wrappedFutures = validators.map(throws);
       await Future.wait(wrappedFutures, eagerError: true);
