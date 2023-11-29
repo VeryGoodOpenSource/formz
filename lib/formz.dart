@@ -2,6 +2,15 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 
+class _FormzException implements Exception {
+  const _FormzException(this.message);
+
+  final String message;
+
+  @override
+  String toString() => message;
+}
+
 /// Enum representing the submission status of a form.
 enum FormzSubmissionStatus {
   /// The form has not yet been submitted.
@@ -153,14 +162,23 @@ class Formz {
   static FutureOr<bool> validate(
     List<FormzInput<dynamic, dynamic>> inputs,
   ) async {
-    var allValid = true;
-    for (final input in inputs) {
-      if (await input.isNotValid) {
-        allValid = false;
-        break;
-      }
+    Future<void> throws(FutureOr<bool> value) async {
+      if (await value) return;
+      throw const _FormzException('');
     }
-    return allValid;
+
+    final validators = inputs.map((input) => input.isValid);
+    try {
+      // We have to wrap the futures and ensure they throw an exception
+      // if they are not valid. This is because Future.wait will eagerError
+      // will only stop at the first exception it encounters.
+      final wrappedFutures = validators.map(throws);
+      await Future.wait(wrappedFutures, eagerError: true);
+    } on _FormzException {
+      return false;
+    }
+
+    return true;
   }
 
   /// Returns a [bool] given a list of [FormzInput] indicating whether
