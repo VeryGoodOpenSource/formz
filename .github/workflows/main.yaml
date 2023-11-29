@@ -31,7 +31,17 @@ jobs:
           sdk: ${{ matrix.dart-version }}
 
       - name: 📦 Install Dependencies
-        run: dart pub get --no-example
+        # Since Dart SDK 3.0.0 (2023-05-10): `dart pub get` and related commands by default also
+        # update the dependencies in the `example` folder (if it exists). Since this package is
+        # Dart only and the example uses Flutter, we need to disable this behavior.
+        #
+        # [See the CHANGELOG for more details](https://github.com/dart-lang/sdk/blob/3ea1820141876d12f8fcfb6c924d4ce4519511dd/CHANGELOG.md).
+        run: |
+          if [[ "${{ matrix.dart-version }}" == "2.14.0" ]]; then
+            dart pub get
+          else
+            dart pub get --no-example
+          fi
 
       - name: ✨ Check Formatting
         run: dart format --set-exit-if-changed lib test
