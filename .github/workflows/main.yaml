@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         dart-version:
-          - "2.14.0" # The minimum Dart SDK version supported by the package.
+          - "2.17.0" # The minimum Dart SDK version supported by the package.
           - "stable"
 
     steps:
@@ -37,7 +37,7 @@ jobs:
         #
         # [See the CHANGELOG for more details](https://github.com/dart-lang/sdk/blob/3ea1820141876d12f8fcfb6c924d4ce4519511dd/CHANGELOG.md).
         run: |
-          if [[ "${{ matrix.dart-version }}" == "2.14.0" ]]; then
+          if [[ "${{ matrix.dart-version }}" == "2.17.0" ]]; then
             dart pub get
           else
             dart pub get --no-example
