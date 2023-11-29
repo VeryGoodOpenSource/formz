@@ -157,8 +157,14 @@ mixin FormzInputErrorCacheMixin<T, E> on FormzInput<T, E> {
 /// Class which contains methods that help manipulate and manage
 /// validity of [FormzInput] instances.
 class Formz {
-  /// Returns a [bool] given a list of [FormzInput] indicating whether
-  /// the inputs are all valid.
+  /// Returns whether or not a given a list of [FormzInput] has all valid
+  /// inputs.
+  ///
+  /// This method will return `true` if all inputs are valid and `false`
+  /// otherwise.
+  ///
+  /// If some inputs validations are asynchronous, this method will return as
+  /// soon as one of the inputs is invalid.
   static FutureOr<bool> validate(
     List<FormzInput<dynamic, dynamic>> inputs,
   ) async {
