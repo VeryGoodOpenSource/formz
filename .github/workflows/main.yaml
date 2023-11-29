@@ -18,10 +18,13 @@ jobs:
     strategy:
       matrix:
         dart-version:
-          - "2.17.0" # The minimum Dart SDK version supported by the package.
+          - "3.0.0" # The minimum Dart SDK version supported by the package.
           - "stable"
 
     steps:
+      # Consider replacing this with Very Good Workflows' dart_package, once the following
+      # issue is resolved:
+      # https://github.com/VeryGoodOpenSource/very_good_workflows/issues/151
       - name: 📚 Git Checkout
         uses: actions/checkout@v4
 
@@ -31,17 +34,7 @@ jobs:
           sdk: ${{ matrix.dart-version }}
 
       - name: 📦 Install Dependencies
-        # Since Dart SDK 3.0.0 (2023-05-10): `dart pub get` and related commands by default also
-        # update the dependencies in the `example` folder (if it exists). Since this package is
-        # Dart only and the example uses Flutter, we need to disable this behavior.
-        #
-        # [See the CHANGELOG for more details](https://github.com/dart-lang/sdk/blob/3ea1820141876d12f8fcfb6c924d4ce4519511dd/CHANGELOG.md).
-        run: |
-          if [[ "${{ matrix.dart-version }}" == "2.17.0" ]]; then
-            dart pub get
-          else
-            dart pub get --no-example
-          fi
+        run: dart pub get --no-example
 
       - name: ✨ Check Formatting
         run: dart format --set-exit-if-changed lib test
