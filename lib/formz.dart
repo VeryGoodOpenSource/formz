@@ -3,12 +3,7 @@ import 'dart:async';
 import 'package:meta/meta.dart';
 
 class _FormzException implements Exception {
-  const _FormzException(this.message);
-
-  final String message;
-
-  @override
-  String toString() => message;
+  const _FormzException();
 }
 
 /// Enum representing the submission status of a form.
@@ -171,7 +166,7 @@ class Formz {
   ) async {
     Future<void> throws(FutureOr<bool> value) async {
       if (await value) return;
-      throw const _FormzException('');
+      throw const _FormzException();
     }
 
     final validators = inputs.map((input) => input.isValid);
