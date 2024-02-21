@@ -1,3 +1,7 @@
+# 0.7.0
+
+- feat!: update Dart version constraints to "^3.0.0" ([#115](https://github.com/VeryGoodOpenSource/formz/pull/115))
+
 # 0.6.1
 
 - fix(example): update validation to throw on empty values ([#100](https://github.com/VeryGoodOpenSource/formz/pull/100))
