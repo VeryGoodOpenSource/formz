@@ -48,7 +48,7 @@ jobs:
           dart test -j 4 --coverage=coverage --platform="vm" && dart pub global run coverage:format_coverage --lcov --check-ignore --in=coverage --out=coverage/lcov.info --packages=.dart_tool/package_config.json --report-on="lib,test"
 
       - name: 📊 Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v2
+        uses: VeryGoodOpenSource/very_good_coverage@v3
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.11.0
