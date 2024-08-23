@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         dart-version:
-          - "3.0.0" # The minimum Dart SDK version supported by the package.
+          - "3.24.0" # The minimum Dart SDK version supported by the package.
           - "stable"
 
     steps:
