@@ -1,3 +1,10 @@
+# 0.8.0
+
+- chore: tighten dependencies ([#127](https://github.com/VeryGoodOpenSource/formz/pull/127)) - **Note:** This now requires Dart 3.5.0 or higher.
+- chore(deps): bump VeryGoodOpenSource/very_good_coverage from 2 to 3 ([#120](https://github.com/VeryGoodOpenSource/formz/pull/120))
+- chore(deps): bump very_good_analysis from 5.1.0 to 6.0.0 in /example ([#124](https://github.com/VeryGoodOpenSource/formz/pull/124))
+- chore(deps): bump very_good_analysis from 5.1.0 to 6.0.0 ([#125](https://github.com/VeryGoodOpenSource/formz/pull/125))
+
 # 0.7.0
 
 - feat!: update Dart version constraints to "^3.0.0" ([#115](https://github.com/VeryGoodOpenSource/formz/pull/115))
