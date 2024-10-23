@@ -1,9 +1,6 @@
 # 0.8.0
 
 - chore: tighten dependencies ([#127](https://github.com/VeryGoodOpenSource/formz/pull/127)) - **Note:** This now requires Dart 3.5.0 or higher.
-- chore(deps): bump VeryGoodOpenSource/very_good_coverage from 2 to 3 ([#120](https://github.com/VeryGoodOpenSource/formz/pull/120))
-- chore(deps): bump very_good_analysis from 5.1.0 to 6.0.0 in /example ([#124](https://github.com/VeryGoodOpenSource/formz/pull/124))
-- chore(deps): bump very_good_analysis from 5.1.0 to 6.0.0 ([#125](https://github.com/VeryGoodOpenSource/formz/pull/125))
 
 # 0.7.0
 
@@ -15,7 +12,7 @@
 - chore: update very good analysis to 5.1.0 ([#104](https://github.com/VeryGoodOpenSource/formz/pull/104))
 - fix(docs): wrong docs ([#106](https://github.com/VeryGoodOpenSource/formz/pull/106))
 
-- # 0.6.0
+# 0.6.0
 
 - feat: add FormzInputErrorCacheMixin mixin
 - feat: add isInProgressOrSuccess to FormzSubmissionStatusX
