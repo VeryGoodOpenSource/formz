@@ -19,6 +19,7 @@ jobs:
       format_directories: 'lib test'
       check_ignore: true
       report_on: 'lib,test'
+      no_example: true
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.11.0
