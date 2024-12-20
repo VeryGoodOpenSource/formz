@@ -13,42 +13,13 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
 
   build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        dart-version:
-          - "3.5.0" # The minimum Dart SDK version supported by the package.
-          - "stable"
-
-    steps:
-      # Consider replacing this with Very Good Workflows' dart_package, once the following
-      # issue is resolved:
-      # https://github.com/VeryGoodOpenSource/very_good_workflows/issues/151
-      - name: 📚 Git Checkout
-        uses: actions/checkout@v4
-
-      - name: 🎯 Setup Dart
-        uses: dart-lang/setup-dart@v1
-        with:
-          sdk: ${{ matrix.dart-version }}
-
-      - name: 📦 Install Dependencies
-        run: dart pub get --no-example
-
-      - name: ✨ Check Formatting
-        run: dart format --set-exit-if-changed lib test
-
-      - name: 🕵️ Analyze
-        run: dart analyze --fatal-infos --fatal-warnings lib test
-
-      - name: 🧪 Run Tests
-        run: |
-          dart pub global activate coverage 1.2.0
-          dart test -j 4 --coverage=coverage --platform="vm" && dart pub global run coverage:format_coverage --lcov --check-ignore --in=coverage --out=coverage/lcov.info --packages=.dart_tool/package_config.json --report-on="lib,test"
-
-      - name: 📊 Check Code Coverage
-        uses: VeryGoodOpenSource/very_good_coverage@v3
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v1
+    with:
+      dart_sdk: '3.5.0' # The minimum Dart SDK version supported by the package.
+      format_directories: 'lib test'
+      check_ignore: true
+      report_on: 'lib,test'
+      no_example: true
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1.11.0
