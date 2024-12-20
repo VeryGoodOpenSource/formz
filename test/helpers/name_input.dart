@@ -21,6 +21,7 @@ class NameInputFormzMixin with FormzMixin {
   List<FormzInput<dynamic, dynamic>> get inputs => [name];
 }
 
+// Test fixture so allowable
 // ignore: must_be_immutable
 class NameInputErrorCacheMixin extends FormzInput<String, NameInputError>
     with FormzInputErrorCacheMixin {
