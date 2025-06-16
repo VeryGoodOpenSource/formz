@@ -61,7 +61,7 @@ class _MyFormState extends State<MyForm> {
     try {
       await _submitForm();
       _state = _state.copyWith(status: FormzSubmissionStatus.success);
-    } catch (_) {
+    } on Exception catch (_) {
       _state = _state.copyWith(status: FormzSubmissionStatus.failure);
     }
 

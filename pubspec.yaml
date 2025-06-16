@@ -8,11 +8,11 @@ documentation: https://github.com/VeryGoodOpenSource/formz
 version: 0.8.0
 
 environment:
-  sdk: ^3.5.0
+  sdk: ^3.8.0
 
 dependencies:
   meta: ^1.7.0
 
 dev_dependencies:
   test: ^1.16.0
-  very_good_analysis: ^7.0.0
+  very_good_analysis: ^9.0.0

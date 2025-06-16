@@ -7,11 +7,9 @@ import 'package:mocktail/mocktail.dart';
 
 class MockRandom extends Mock implements Random {}
 
-
 final _seed = MockRandom();
 
 void main() {
-
   group('$MyApp', () {
     testWidgets('render example', (tester) async {
       await tester.pumpWidget(const MyApp());
@@ -20,9 +18,8 @@ void main() {
   });
 
   group('$MyForm', () {
-
     setUp(() {
-      when(()=> _seed.nextInt(any())).thenReturn(1);
+      when(() => _seed.nextInt(any())).thenReturn(1);
     });
 
     testWidgets('submits valid values', (tester) async {
@@ -113,7 +110,9 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(
-          find.text('''Password must be at least 8 characters and contain at least one letter and number'''),
+          find.text(
+            '''Password must be at least 8 characters and contain at least one letter and number''',
+          ),
           findsOneWidget,
         );
       });
@@ -137,7 +136,9 @@ void main() {
         await tester.pumpAndSettle();
 
         expect(
-          find.text('''Password must be at least 8 characters and contain at least one letter and number'''),
+          find.text(
+            '''Password must be at least 8 characters and contain at least one letter and number''',
+          ),
           findsOneWidget,
         );
       });
