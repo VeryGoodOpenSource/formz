@@ -15,7 +15,7 @@ enum FormzSubmissionStatus {
   failure,
 
   /// The form submission has been canceled.
-  canceled
+  canceled,
 }
 
 /// Useful extensions on [FormzSubmissionStatus]

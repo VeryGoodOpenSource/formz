@@ -97,8 +97,7 @@ void main() {
         expect(NameInput.dirty(value: 'joe').error, isNull);
       });
 
-      test(
-          'error is NameInputError.empty '
+      test('error is NameInputError.empty '
           'if super.dirty is used and input is invalid', () {
         expect(NameInput.dirty().error, NameInputError.empty);
       });
@@ -135,8 +134,7 @@ void main() {
         expect(NameInput.dirty().isNotValid, isTrue);
       });
 
-      test(
-          'isNotValid is true if super.dirty is used '
+      test('isNotValid is true if super.dirty is used '
           'and input is invalid', () {
         expect(NameInput.dirty().isValid, isFalse);
         expect(NameInput.dirty().isNotValid, isTrue);
