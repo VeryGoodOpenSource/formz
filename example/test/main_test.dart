@@ -111,7 +111,8 @@ void main() {
 
         expect(
           find.text(
-              '''Password must be at least 8 characters and contain at least one letter and number'''),
+            '''Password must be at least 8 characters and contain at least one letter and number''',
+          ),
           findsOneWidget,
         );
       });
@@ -136,7 +137,8 @@ void main() {
 
         expect(
           find.text(
-              '''Password must be at least 8 characters and contain at least one letter and number'''),
+            '''Password must be at least 8 characters and contain at least one letter and number''',
+          ),
           findsOneWidget,
         );
       });
