@@ -12,6 +12,28 @@ class NameInput extends FormzInput<String, NameInputError> {
   }
 }
 
+enum PasswordValidationError { invalid, empty }
+
+class PasswordInput extends FormzInput<String, PasswordValidationError> {
+  const PasswordInput.pure({String value = ''}) : super.pure(value);
+  const PasswordInput.dirty({String value = ''}) : super.dirty(value);
+
+  static final _passwordRegex = RegExp(
+    r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+  );
+
+  @override
+  PasswordValidationError? validator(String value) {
+    if (value.isEmpty) {
+      return PasswordValidationError.empty;
+    } else if (!_passwordRegex.hasMatch(value)) {
+      return PasswordValidationError.invalid;
+    }
+
+    return null;
+  }
+}
+
 class NameInputFormzMixin with FormzMixin {
   NameInputFormzMixin({this.name = const NameInput.pure()});
 
@@ -19,6 +41,19 @@ class NameInputFormzMixin with FormzMixin {
 
   @override
   List<FormzInput<dynamic, dynamic>> get inputs => [name];
+}
+
+class NamePasswordInputFormzMixin with FormzMixin {
+  NamePasswordInputFormzMixin({
+    this.name = const NameInput.pure(),
+    this.password = const PasswordInput.pure(),
+  });
+
+  final NameInput name;
+  final PasswordInput password;
+
+  @override
+  List<FormzInput<dynamic, dynamic>> get inputs => [name, password];
 }
 
 // Test fixture so allowable
