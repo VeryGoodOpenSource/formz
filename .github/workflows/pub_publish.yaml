@@ -11,4 +11,4 @@ jobs:
       id-token: write # Required for authentication using OIDC
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_pub_publish.yml@v1
     with:
-      dart_sdk: 3.12.0
+      dart_sdk: 3.13.0
