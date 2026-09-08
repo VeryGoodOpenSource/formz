@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.8.2](https://github.com/VeryGoodOpenSource/formz/compare/v0.8.1...v0.8.2) (2026-09-08)
+
+
+### Features
+
+* **deps:** upgrade to Dart 3.13 ([#162](https://github.com/VeryGoodOpenSource/formz/issues/162)) ([57a4e1e](https://github.com/VeryGoodOpenSource/formz/commit/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969))
+
+
+### Miscellaneous Chores
+
+* **deps:** bump very_good_analysis from 10.3.0 to 11.0.0 in /example ([#164](https://github.com/VeryGoodOpenSource/formz/issues/164)) ([b5cf225](https://github.com/VeryGoodOpenSource/formz/commit/b5cf225626082914ab8f73539e87a24154e91867))
+
 ## [0.8.1](https://github.com/VeryGoodOpenSource/formz/compare/v0.8.0...v0.8.1) (2026-08-06)
 
 
