@@ -3,8 +3,8 @@ import 'package:formz/formz.dart';
 enum NameInputError { empty }
 
 class NameInput extends FormzInput<String, NameInputError> {
-  const NameInput.pure({String value = ''}) : super.pure(value);
-  const NameInput.dirty({String value = ''}) : super.dirty(value);
+  const new pure({String value = ''}) : super.pure(value);
+  const new dirty({String value = ''}) : super.dirty(value);
 
   @override
   NameInputError? validator(String value) {
@@ -13,7 +13,7 @@ class NameInput extends FormzInput<String, NameInputError> {
 }
 
 class NameInputFormzMixin with FormzMixin {
-  NameInputFormzMixin({this.name = const NameInput.pure()});
+  new({this.name = const NameInput.pure()});
 
   final NameInput name;
 
@@ -25,8 +25,8 @@ class NameInputFormzMixin with FormzMixin {
 // ignore: must_be_immutable
 class NameInputErrorCacheMixin extends FormzInput<String, NameInputError>
     with FormzInputErrorCacheMixin {
-  NameInputErrorCacheMixin.pure({String value = ''}) : super.pure(value);
-  NameInputErrorCacheMixin.dirty({String value = ''}) : super.dirty(value);
+  new pure({String value = ''}) : super.pure(value);
+  new dirty({String value = ''}) : super.dirty(value);
 
   int validatorCalls = 0;
 
