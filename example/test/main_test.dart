@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class MockRandom extends Mock implements Random {}
+class MockRandom extends Mock implements Random;
 
 final _seed = MockRandom();
 
@@ -70,10 +70,7 @@ void main() {
       testWidgets('empty email', (tester) async {
         await tester.pumpMyForm();
 
-        await tester.enterText(
-          find.byKey(const Key('myForm_emailInput')),
-          '',
-        );
+        await tester.enterText(find.byKey(const Key('myForm_emailInput')), '');
         await tester.pumpAndSettle();
 
         await tester.enterText(
@@ -85,10 +82,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.pumpAndSettle();
 
-        expect(
-          find.text('Please ensure the email entered is valid'),
-          findsOneWidget,
-        );
+        expect(find.text('Please enter an email'), findsOneWidget);
       });
 
       testWidgets('invalid password', (tester) async {
@@ -135,12 +129,7 @@ void main() {
         await tester.pumpAndSettle();
         await tester.pumpAndSettle();
 
-        expect(
-          find.text(
-            '''Password must be at least 8 characters and contain at least one letter and number''',
-          ),
-          findsOneWidget,
-        );
+        expect(find.text('Please enter a password'), findsOneWidget);
       });
     });
   });
@@ -148,6 +137,10 @@ void main() {
 
 extension on WidgetTester {
   Future<void> pumpMyForm() async {
-    await pumpWidget(MaterialApp(home: Scaffold(body: MyForm(seed: _seed))));
+    await pumpWidget(
+      MaterialApp(
+        home: Scaffold(body: MyForm(seed: _seed)),
+      ),
+    );
   }
 }
