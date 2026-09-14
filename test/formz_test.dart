@@ -1,5 +1,6 @@
 // Not needed for test files
 // ignore_for_file: prefer_const_constructors
+
 import 'package:formz/formz.dart';
 import 'package:test/test.dart';
 
@@ -39,6 +40,53 @@ void main() {
         expect(form.isDirty, isTrue);
         expect(form.isPure, isFalse);
       });
+
+      test('for a form with 2 invalid inputs, returns 2 invalid inputs', () {
+        final invalidName = NameInput.dirty();
+        final invalidPassword = PasswordInput.dirty();
+        final form = NamePasswordInputFormzMixin(
+          name: invalidName,
+          password: invalidPassword,
+        );
+        final invalidInputs = form.invalidInputs;
+
+        expect(invalidInputs.length, 2);
+        expect(invalidInputs.contains(invalidName), isTrue);
+        expect(invalidInputs.contains(invalidPassword), isTrue);
+      });
+
+      test(
+        'for a form with 1 invalid and 1 valid input, returns 1 invalid input',
+        () {
+          final validName = NameInput.dirty(value: 'Name');
+          final invalidPassword = PasswordInput.dirty();
+          final form = NamePasswordInputFormzMixin(
+            name: validName,
+            password: invalidPassword,
+          );
+          final invalidInputs = form.invalidInputs;
+
+          expect(invalidInputs.length, 1);
+          expect(invalidInputs.contains(invalidPassword), isTrue);
+        },
+      );
+
+      test(
+        'form with only valid inputs, returns empty set as invalid inputs',
+        () {
+          final validName = NameInput.dirty(value: 'Name');
+          final validPassword = PasswordInput.dirty(
+            value: 'VeryGoodPassword42',
+          );
+          final form = NamePasswordInputFormzMixin(
+            name: validName,
+            password: validPassword,
+          );
+          final invalidInputs = form.invalidInputs;
+
+          expect(invalidInputs.length, 0);
+        },
+      );
     });
 
     group('FormzInputErrorCacheMixin', () {
@@ -243,6 +291,65 @@ void main() {
           ]),
           isFalse,
         );
+      });
+    });
+
+    group('validateGranularly', () {
+      test('returns empty set for empty inputs', () {
+        expect(Formz.validateGranularly([]), <FormzInput<dynamic, dynamic>>{});
+      });
+
+      test('returns empty set for valid pure input', () {
+        expect(
+          Formz.validateGranularly([NameInput.pure(value: 'joe')]),
+          <FormzInput<dynamic, dynamic>>{},
+        );
+      });
+
+      test('returns empty set for valid dirty input', () {
+        expect(
+          Formz.validateGranularly([NameInput.dirty(value: 'joe')]),
+          <FormzInput<dynamic, dynamic>>{},
+        );
+      });
+
+      test('returns empty set for multiple valid pure/dirty input', () {
+        expect(
+          Formz.validateGranularly([
+            NameInput.dirty(value: 'jen'),
+            NameInput.pure(value: 'bob'),
+            NameInput.dirty(value: 'alex'),
+          ]),
+          <FormzInput<dynamic, dynamic>>{},
+        );
+      });
+
+      test(
+        'returns one invalid input when dirty invalid input is provided',
+        () {
+          final invalidName = NameInput.dirty();
+          expect(Formz.validateGranularly([invalidName]), {invalidName});
+        },
+      );
+
+      test('returns one invalid input when pure invalid input is provided', () {
+        final invalidName = NameInput.pure();
+        expect(Formz.validateGranularly([invalidName]), {invalidName});
+      });
+
+      test('returns only invalid inputs for multiple valid/invalid inputs', () {
+        final invalidNameOne = NameInput.dirty();
+        final invalidNameTwo = NameInput.pure();
+        final validName = NameInput.dirty(value: 'Joe');
+        final result = Formz.validateGranularly([
+          invalidNameOne,
+          validName,
+          invalidNameTwo,
+        ]);
+        expect(result.length, 2);
+        expect(result.contains(invalidNameOne), isTrue);
+        expect(result.contains(invalidNameTwo), isTrue);
+        expect(result.contains(validName), isFalse);
       });
     });
 

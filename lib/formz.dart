@@ -157,6 +157,14 @@ class Formz {
   static bool isPure(List<FormzInput<dynamic, dynamic>> inputs) {
     return inputs.every((input) => input.isPure);
   }
+
+  /// Returns a [Set] of invalid [FormzInput] given a list of [FormzInput]
+  /// to be validated
+  static Set<FormzInput<dynamic, dynamic>> validateGranularly(
+    List<FormzInput<dynamic, dynamic>> inputs,
+  ) {
+    return inputs.where((input) => input.isNotValid).toSet();
+  }
 }
 
 /// Mixin that automatically handles validation of all [FormzInput]s present in
@@ -191,6 +199,10 @@ mixin FormzMixin {
 
   /// Whether at least one of the [FormzInput]s is dirty.
   bool get isDirty => !isPure;
+
+  /// Returns a [Set] of invalid [FormzInput] by validating the [inputs]
+  Set<FormzInput<dynamic, dynamic>> get invalidInputs =>
+      Formz.validateGranularly(inputs);
 
   /// Returns all [FormzInput] instances.
   ///
