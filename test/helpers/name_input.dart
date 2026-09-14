@@ -15,8 +15,8 @@ class NameInput extends FormzInput<String, NameInputError> {
 enum PasswordValidationError { invalid, empty }
 
 class PasswordInput extends FormzInput<String, PasswordValidationError> {
-  const PasswordInput.pure({String value = ''}) : super.pure(value);
-  const PasswordInput.dirty({String value = ''}) : super.dirty(value);
+  const new pure({String value = ''}) : super.pure(value);
+  const new dirty({String value = ''}) : super.dirty(value);
 
   static final _passwordRegex = RegExp(
     r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
@@ -44,7 +44,7 @@ class NameInputFormzMixin with FormzMixin {
 }
 
 class NamePasswordInputFormzMixin with FormzMixin {
-  NamePasswordInputFormzMixin({
+  new({
     this.name = const NameInput.pure(),
     this.password = const PasswordInput.pure(),
   });
