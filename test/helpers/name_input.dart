@@ -3,8 +3,8 @@ import 'package:formz/formz.dart';
 enum NameInputError { empty }
 
 class NameInput extends FormzInput<String, NameInputError> {
-  const NameInput.pure({String value = ''}) : super.pure(value);
-  const NameInput.dirty({String value = ''}) : super.dirty(value);
+  const new pure({String value = ''}) : super.pure(value);
+  const new dirty({String value = ''}) : super.dirty(value);
 
   @override
   NameInputError? validator(String value) {
@@ -15,8 +15,8 @@ class NameInput extends FormzInput<String, NameInputError> {
 enum PasswordValidationError { invalid, empty }
 
 class PasswordInput extends FormzInput<String, PasswordValidationError> {
-  const PasswordInput.pure({String value = ''}) : super.pure(value);
-  const PasswordInput.dirty({String value = ''}) : super.dirty(value);
+  const new pure({String value = ''}) : super.pure(value);
+  const new dirty({String value = ''}) : super.dirty(value);
 
   static final _passwordRegex = RegExp(
     r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
@@ -35,7 +35,7 @@ class PasswordInput extends FormzInput<String, PasswordValidationError> {
 }
 
 class NameInputFormzMixin with FormzMixin {
-  NameInputFormzMixin({this.name = const NameInput.pure()});
+  new({this.name = const NameInput.pure()});
 
   final NameInput name;
 
@@ -44,7 +44,7 @@ class NameInputFormzMixin with FormzMixin {
 }
 
 class NamePasswordInputFormzMixin with FormzMixin {
-  NamePasswordInputFormzMixin({
+  new({
     this.name = const NameInput.pure(),
     this.password = const PasswordInput.pure(),
   });
@@ -60,8 +60,8 @@ class NamePasswordInputFormzMixin with FormzMixin {
 // ignore: must_be_immutable
 class NameInputErrorCacheMixin extends FormzInput<String, NameInputError>
     with FormzInputErrorCacheMixin {
-  NameInputErrorCacheMixin.pure({String value = ''}) : super.pure(value);
-  NameInputErrorCacheMixin.dirty({String value = ''}) : super.dirty(value);
+  new pure({String value = ''}) : super.pure(value);
+  new dirty({String value = ''}) : super.dirty(value);
 
   int validatorCalls = 0;
 

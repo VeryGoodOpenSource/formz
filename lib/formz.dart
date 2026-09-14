@@ -64,13 +64,13 @@ extension FormzSubmissionStatusX on FormzSubmissionStatus {
 /// {@endtemplate}
 @immutable
 abstract class FormzInput<T, E> {
-  const FormzInput._({required this.value, this.isPure = true});
+  const new _({required this.value, this.isPure = true});
 
   /// Constructor which create a `pure` [FormzInput] with a given value.
-  const FormzInput.pure(T value) : this._(value: value);
+  const new pure(T value) : this._(value: value);
 
   /// Constructor which create a `dirty` [FormzInput] with a given value.
-  const FormzInput.dirty(T value) : this._(value: value, isPure: false);
+  const new dirty(T value) : this._(value: value, isPure: false);
 
   /// The value of the given [FormzInput].
   /// For example, if you have a `FormzInput` for `FirstName`,
