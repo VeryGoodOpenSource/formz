@@ -1,11 +1,11 @@
 # Changelog
 
-## [0.8.2](https://github.com/VeryGoodOpenSource/formz/compare/v0.8.1...v0.8.2) (2026-09-14)
+## [0.9.0](https://github.com/VeryGoodOpenSource/formz/compare/v0.8.1...v0.9.0) (2026-09-14)
 
 
 ### Features
 
-* add granual validation ([#146](https://github.com/VeryGoodOpenSource/formz/issues/146)) ([2498755](https://github.com/VeryGoodOpenSource/formz/commit/2498755fbd8c946b7b083cb9deec421191a4592b))
+* **feat:** add granual validation ([#146](https://github.com/VeryGoodOpenSource/formz/issues/146)) ([2498755](https://github.com/VeryGoodOpenSource/formz/commit/2498755fbd8c946b7b083cb9deec421191a4592b))
 * **deps:** upgrade to Dart 3.13 ([#162](https://github.com/VeryGoodOpenSource/formz/issues/162)) ([57a4e1e](https://github.com/VeryGoodOpenSource/formz/commit/57a4e1e7efb13eb1fea614158ccdd1fc52d4f969))
 
 
