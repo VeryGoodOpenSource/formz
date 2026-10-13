@@ -123,6 +123,78 @@ class Email extends FormzInput<String, EmailValidationError>
 }
 ```
 
+## Asynchronous validation
+
+When part of the validation is asynchronous, for example checking if a username is taken or validating a phone number with a plugin, use the `FormzInputAsyncValidationMixin` mixin. Formz does not run the asynchronous validation itself. You run it wherever you manage your state and store its result in the input through `asyncStatus` and `asyncError`.
+
+```dart
+import 'package:formz/formz.dart';
+
+enum PhoneNumberError { empty, invalid }
+
+class PhoneNumber extends FormzInput<String, PhoneNumberError>
+    with FormzInputAsyncValidationMixin {
+  const PhoneNumber.pure()
+      : asyncStatus = FormzAsyncValidationStatus.initial,
+        asyncError = null,
+        super.pure('');
+
+  const PhoneNumber.dirty(
+    super.value, {
+    this.asyncStatus = FormzAsyncValidationStatus.initial,
+    this.asyncError,
+  }) : super.dirty();
+
+  @override
+  final FormzAsyncValidationStatus asyncStatus;
+
+  @override
+  final PhoneNumberError? asyncError;
+
+  // The synchronous validator still runs and takes precedence.
+  @override
+  PhoneNumberError? validator(String value) {
+    return value.isEmpty ? PhoneNumberError.empty : null;
+  }
+}
+```
+
+The input is only valid once `asyncStatus` is `completed` and neither validation returned an error. A typical flow in a Bloc looks like this:
+
+```dart
+Future<void> _onPhoneNumberChanged(
+  PhoneNumberChanged event,
+  Emitter<MyState> emit,
+) async {
+  final value = event.value;
+  emit(
+    state.copyWith(
+      phoneNumber: PhoneNumber.dirty(
+        value,
+        asyncStatus: FormzAsyncValidationStatus.inProgress,
+      ),
+    ),
+  );
+
+  final isValid = await _phoneNumberValidator.isValid(value);
+
+  // Ignore the result if the value changed while validating.
+  if (state.phoneNumber.value != value) return;
+
+  emit(
+    state.copyWith(
+      phoneNumber: PhoneNumber.dirty(
+        value,
+        asyncStatus: FormzAsyncValidationStatus.completed,
+        asyncError: isValid ? null : PhoneNumberError.invalid,
+      ),
+    ),
+  );
+}
+```
+
+When combining it with `FormzInputErrorCacheMixin`, apply `FormzInputAsyncValidationMixin` last.
+
 [ci_badge]: https://github.com/VeryGoodOpenSource/formz/actions/workflows/main.yaml/badge.svg
 [ci_link]: https://github.com/VeryGoodOpenSource/formz/actions
 [coverage_badge]: https://raw.githubusercontent.com/VeryGoodOpenSource/formz/main/coverage_badge.svg

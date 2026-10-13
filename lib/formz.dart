@@ -143,6 +143,98 @@ mixin FormzInputErrorCacheMixin<T, E> on FormzInput<T, E> {
   bool get isValid => _error == null;
 }
 
+/// Enum representing the status of an asynchronous validation.
+enum FormzAsyncValidationStatus {
+  /// The asynchronous validation has not started yet.
+  initial,
+
+  /// The asynchronous validation is in progress.
+  inProgress,
+
+  /// The asynchronous validation has completed.
+  completed,
+}
+
+/// Useful extensions on [FormzAsyncValidationStatus]
+extension FormzAsyncValidationStatusX on FormzAsyncValidationStatus {
+  /// Indicates whether the asynchronous validation has not started yet.
+  bool get isInitial => this == FormzAsyncValidationStatus.initial;
+
+  /// Indicates whether the asynchronous validation is in progress.
+  bool get isInProgress => this == FormzAsyncValidationStatus.inProgress;
+
+  /// Indicates whether the asynchronous validation has completed.
+  bool get isCompleted => this == FormzAsyncValidationStatus.completed;
+}
+
+/// {@template formz_input_async_validation_mixin}
+/// Mixin for [FormzInput] that adds support for asynchronous validation.
+///
+/// Formz does not run the asynchronous validation itself. It is run outside
+/// of the input, for example in a Bloc, and its result is stored in a new
+/// instance of the input through [asyncStatus] and [asyncError].
+///
+/// The synchronous `validator` still runs and its error takes precedence over
+/// [asyncError]. The input is only valid once the asynchronous validation has
+/// completed and neither validation returned an error.
+///
+/// ```dart
+/// enum PhoneNumberError { empty, invalid }
+///
+/// class PhoneNumber extends FormzInput<String, PhoneNumberError>
+///     with FormzInputAsyncValidationMixin {
+///   const PhoneNumber.pure()
+///       : asyncStatus = FormzAsyncValidationStatus.initial,
+///         asyncError = null,
+///         super.pure('');
+///
+///   const PhoneNumber.dirty(
+///     super.value, {
+///     this.asyncStatus = FormzAsyncValidationStatus.initial,
+///     this.asyncError,
+///   }) : super.dirty();
+///
+///   @override
+///   final FormzAsyncValidationStatus asyncStatus;
+///
+///   @override
+///   final PhoneNumberError? asyncError;
+///
+///   @override
+///   PhoneNumberError? validator(String value) {
+///     return value.isEmpty ? PhoneNumberError.empty : null;
+///   }
+/// }
+/// ```
+///
+/// When combined with [FormzInputErrorCacheMixin], this mixin must be applied
+/// last so that the cached synchronous error is used.
+/// {@endtemplate}
+mixin FormzInputAsyncValidationMixin<T, E> on FormzInput<T, E> {
+  /// The status of the asynchronous validation.
+  FormzAsyncValidationStatus get asyncStatus;
+
+  /// The error returned by the asynchronous validation, if any.
+  E? get asyncError;
+
+  @override
+  E? get error => super.error ?? asyncError;
+
+  @override
+  bool get isValid => asyncStatus.isCompleted && error == null;
+
+  @override
+  int get hashCode => Object.hashAll([value, isPure, asyncStatus, asyncError]);
+
+  @override
+  bool operator ==(Object other) {
+    return super == other &&
+        other is FormzInputAsyncValidationMixin<T, E> &&
+        other.asyncStatus == asyncStatus &&
+        other.asyncError == asyncError;
+  }
+}
+
 /// Class which contains methods that help manipulate and manage
 /// validity of [FormzInput] instances.
 class Formz {
