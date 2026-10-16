@@ -23,7 +23,6 @@
     "nullsafety",
     "googleapis",
     "OIDC",
-    "srealmoreno",
-    "unicoder"
+    "srealmoreno"
   ]
 }
