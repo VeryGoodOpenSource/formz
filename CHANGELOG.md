@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.1](https://github.com/VeryGoodOpenSource/formz/compare/v0.9.0...v0.9.1) (2026-10-22)
+
+
+### Miscellaneous Chores
+
+* add unicoder.yaml with VGV preset ([#168](https://github.com/VeryGoodOpenSource/formz/issues/168)) ([a3e92cc](https://github.com/VeryGoodOpenSource/formz/commit/a3e92cc4d4820293928f04f8562be2a6b49bf7cb))
+
 ## [0.9.0](https://github.com/VeryGoodOpenSource/formz/compare/v0.8.1...v0.9.0) (2026-09-14)
 
 
