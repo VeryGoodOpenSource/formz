@@ -71,3 +71,63 @@ class NameInputErrorCacheMixin extends FormzInput<String, NameInputError>
     return value.isEmpty ? NameInputError.empty : null;
   }
 }
+
+enum UsernameError { empty, taken }
+
+class UsernameInput extends FormzInput<String, UsernameError>
+    with FormzInputAsyncValidationMixin {
+  const new pure({String value = ''})
+    : asyncStatus = FormzAsyncValidationStatus.initial,
+      asyncError = null,
+      super.pure(value);
+  const new dirty({
+    String value = '',
+    this.asyncStatus = FormzAsyncValidationStatus.initial,
+    this.asyncError,
+  }) : super.dirty(value);
+
+  @override
+  final FormzAsyncValidationStatus asyncStatus;
+
+  @override
+  final UsernameError? asyncError;
+
+  @override
+  UsernameError? validator(String value) {
+    return value.isEmpty ? UsernameError.empty : null;
+  }
+}
+
+// Test fixture so allowable
+// ignore: must_be_immutable
+class UsernameInputErrorCache extends FormzInput<String, UsernameError>
+    with FormzInputErrorCacheMixin, FormzInputAsyncValidationMixin {
+  new dirty({
+    String value = '',
+    this.asyncStatus = FormzAsyncValidationStatus.initial,
+    this.asyncError,
+  }) : super.dirty(value);
+
+  @override
+  final FormzAsyncValidationStatus asyncStatus;
+
+  @override
+  final UsernameError? asyncError;
+
+  int validatorCalls = 0;
+
+  @override
+  UsernameError? validator(String value) {
+    validatorCalls++;
+    return value.isEmpty ? UsernameError.empty : null;
+  }
+}
+
+class UsernameInputFormzMixin with FormzMixin {
+  new({this.username = const UsernameInput.pure()});
+
+  final UsernameInput username;
+
+  @override
+  List<FormzInput<dynamic, dynamic>> get inputs => [username];
+}
