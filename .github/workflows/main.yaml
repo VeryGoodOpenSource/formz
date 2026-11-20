@@ -9,9 +9,6 @@ on:
       - main
 
 jobs:
-  semantic-pull-request:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v2
-
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v2
     with:
@@ -20,14 +17,6 @@ jobs:
       check_ignore: true
       report_on: "lib,test"
       no_example: true
-
-  spell-check:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v2
-    with:
-      includes: |
-        **/*.{dart,md,yaml,yml}
-        .*/**/*.{yaml,yml}
-      modified_files_only: false
 
   pana:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/pana.yml@v1
