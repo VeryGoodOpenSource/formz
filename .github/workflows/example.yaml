@@ -16,4 +16,4 @@ jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v2
     with:
-      flutter_version: "3.47.x"
+      flutter_version: "3.50.x"
