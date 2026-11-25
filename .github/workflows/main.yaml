@@ -12,7 +12,7 @@ jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/dart_package.yml@v2
     with:
-      dart_sdk: 3.13.0
+      dart_sdk: 3.14.0
       format_directories: "lib test"
       check_ignore: true
       report_on: "lib,test"
