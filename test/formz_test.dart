@@ -109,6 +109,150 @@ void main() {
       });
     });
 
+    group('FormzInputAsyncValidationMixin', () {
+      test('is not valid before async validation completes', () {
+        expect(const UsernameInput.pure().isValid, isFalse);
+        expect(const UsernameInput.dirty(value: 'joe').isValid, isFalse);
+        expect(
+          const UsernameInput.dirty(
+            value: 'joe',
+            asyncStatus: FormzAsyncValidationStatus.inProgress,
+          ).isValid,
+          isFalse,
+        );
+      });
+
+      test('is valid when async validation completes without error', () {
+        const input = UsernameInput.dirty(
+          value: 'joe',
+          asyncStatus: FormzAsyncValidationStatus.completed,
+        );
+        expect(input.isValid, isTrue);
+        expect(input.isNotValid, isFalse);
+        expect(input.error, isNull);
+        expect(input.displayError, isNull);
+      });
+
+      test('is not valid when async validation returns an error', () {
+        const input = UsernameInput.dirty(
+          value: 'joe',
+          asyncStatus: FormzAsyncValidationStatus.completed,
+          asyncError: UsernameError.taken,
+        );
+        expect(input.isValid, isFalse);
+        expect(input.error, UsernameError.taken);
+        expect(input.displayError, UsernameError.taken);
+      });
+
+      test('sync error takes precedence over async error', () {
+        const input = UsernameInput.dirty(
+          asyncStatus: FormzAsyncValidationStatus.completed,
+          asyncError: UsernameError.taken,
+        );
+        expect(input.isValid, isFalse);
+        expect(input.error, UsernameError.empty);
+      });
+
+      test('works with FormzInputErrorCacheMixin', () {
+        final input = UsernameInputErrorCache.dirty(
+          value: 'joe',
+          asyncStatus: FormzAsyncValidationStatus.completed,
+          asyncError: UsernameError.taken,
+        );
+        expect(input.error, UsernameError.taken);
+        expect(input.isValid, isFalse);
+        expect(input.error, UsernameError.taken);
+        expect(input.validatorCalls, 1);
+      });
+
+      test('works with FormzMixin', () {
+        expect(UsernameInputFormzMixin().isValid, isFalse);
+        expect(
+          UsernameInputFormzMixin(
+            username: const UsernameInput.dirty(
+              value: 'joe',
+              asyncStatus: FormzAsyncValidationStatus.completed,
+            ),
+          ).isValid,
+          isTrue,
+        );
+      });
+
+      test('supports value comparison', () {
+        expect(
+          const UsernameInput.dirty(
+            value: 'joe',
+            asyncStatus: FormzAsyncValidationStatus.completed,
+          ),
+          equals(
+            const UsernameInput.dirty(
+              value: 'joe',
+              asyncStatus: FormzAsyncValidationStatus.completed,
+            ),
+          ),
+        );
+        expect(
+          const UsernameInput.dirty(value: 'joe'),
+          isNot(
+            equals(
+              const UsernameInput.dirty(
+                value: 'joe',
+                asyncStatus: FormzAsyncValidationStatus.inProgress,
+              ),
+            ),
+          ),
+        );
+        expect(
+          const UsernameInput.dirty(
+            value: 'joe',
+            asyncStatus: FormzAsyncValidationStatus.completed,
+          ),
+          isNot(
+            equals(
+              const UsernameInput.dirty(
+                value: 'joe',
+                asyncStatus: FormzAsyncValidationStatus.completed,
+                asyncError: UsernameError.taken,
+              ),
+            ),
+          ),
+        );
+      });
+
+      test('hashCode reflects async state', () {
+        expect(
+          const UsernameInput.dirty(value: 'joe').hashCode,
+          const UsernameInput.dirty(value: 'joe').hashCode,
+        );
+        expect(
+          const UsernameInput.dirty(value: 'joe').hashCode,
+          isNot(
+            const UsernameInput.dirty(
+              value: 'joe',
+              asyncStatus: FormzAsyncValidationStatus.completed,
+            ).hashCode,
+          ),
+        );
+      });
+    });
+
+    group('FormzAsyncValidationStatusX', () {
+      test('isInitial', () {
+        expect(FormzAsyncValidationStatus.initial.isInitial, isTrue);
+        expect(FormzAsyncValidationStatus.inProgress.isInitial, isFalse);
+      });
+
+      test('isInProgress', () {
+        expect(FormzAsyncValidationStatus.inProgress.isInProgress, isTrue);
+        expect(FormzAsyncValidationStatus.completed.isInProgress, isFalse);
+      });
+
+      test('isCompleted', () {
+        expect(FormzAsyncValidationStatus.completed.isCompleted, isTrue);
+        expect(FormzAsyncValidationStatus.initial.isCompleted, isFalse);
+      });
+    });
+
     group('FormzInput', () {
       test('value is correct', () {
         expect(NameInput.pure(value: 'joe').value, 'joe');

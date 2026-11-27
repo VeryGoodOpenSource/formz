@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:example/async_form.dart';
 import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 
@@ -11,11 +12,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Formz Example')),
-        body: Padding(
-          padding: const EdgeInsets.all(24),
-          child: SingleChildScrollView(child: MyForm()),
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Formz Example'),
+            bottom: const TabBar(
+              tabs: [
+                Tab(text: 'Basic'),
+                Tab(text: 'Async validation'),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(24),
+                child: SingleChildScrollView(child: MyForm()),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(24),
+                child: SingleChildScrollView(child: AsyncForm()),
+              ),
+            ],
+          ),
         ),
       ),
     );
